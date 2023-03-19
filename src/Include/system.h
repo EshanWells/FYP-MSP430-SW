@@ -23,7 +23,7 @@ enum MCLK_SEL {
     MCLK_DCO,
     MCLK_XT2,
     MCLK_LFXT
-}
+};
 
 enum SMCLK_SEL {
     SMCLK_DCO,
