@@ -4,7 +4,7 @@
 void initGPIO(void)
 {
     // Set P1.0 and P1.6 as outputs, P1.3 as input
-    P1DIR |= BIT0 | BIT6;
+    P1DIR |= BIT0;
     P1DIR &= ~BIT3;
     
     // Set P1.3 to use pull-up resistor

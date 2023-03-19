@@ -11,7 +11,7 @@ int main(void)
 	sysInit();
 	initGPIO();
 
-	timer0Counter0(62500);
+	timer0Counter0(62500,1);
 	while(1){
 	    LPM1;
 	}
