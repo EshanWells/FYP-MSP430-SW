@@ -3,8 +3,6 @@
 
 #include "core.h"
 
-void initTimer0(void);
-
 void timer0Counter0(uint16_t delay);
 
 void blinkLED(void);
