@@ -39,5 +39,5 @@ __interrupt void Timer_A0_CCR0_ISR(void)
 void blinkLED(void)
 {
     P1OUT ^= 0x01;
-    timer0Counter0(65535);
+    timer0Counter0(62500);
 }
