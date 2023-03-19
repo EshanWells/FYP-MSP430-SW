@@ -10,9 +10,11 @@
 
 
 #include <msp430.h>
+#include "msp430g2553.h"
 
 #include <stdint.h>
 
 #include "system.h"
+#include "gpio.h"
 
 #endif /* SRC_INCLUDE_CORE_H_ */
