@@ -2,11 +2,6 @@
 
 #include "core.h"
 
-void initTimer0(void)
-{
-    TA0CTL = TASSEL_2 + ID_3; // use SMCLK as source, div 8
-}
-
 void timer0Counter0(uint16_t delay)
 {
     // set up Timer0_A3

@@ -26,8 +26,6 @@ void sysInit(void)
     initACLK(DIV_8); //set clock to 125000
     //! Need a watch crystal to get ACLK working properly. We'll clock it off DCO for now...
 
-    initTimer0();
-
     _enable_interrupt();
 }
 
