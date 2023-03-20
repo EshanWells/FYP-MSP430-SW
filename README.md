@@ -9,7 +9,7 @@ In a very loose order
  - [x] Clock setup
  - [x] Interrupt blink
  - [ ] UART Driver
- - [ ] Fix GPIO.c and .h
+ - [X] Fix GPIO.c and .h
  - [ ] Implement I2C Drivers
  - [ ] SHT40 Driver
  - [ ] RTC Driver
