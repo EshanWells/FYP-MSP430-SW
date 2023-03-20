@@ -17,6 +17,5 @@
 #include "system.h"
 #include "gpio.h"
 #include "timer0_A3.h"
-#include "UARTA.h"
 
 #endif /* SRC_INCLUDE_CORE_H_ */

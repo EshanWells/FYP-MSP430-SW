@@ -9,11 +9,11 @@
 int main(void)
 {
 	sysInit();
-	initGPIO();
 
-	timer0Counter0(62500,1);
-	while(1){
-	    //LPM1;
+	timer0Counter0(16384,1);
+
+	while(1)
+	{
+		
 	}
 }
-

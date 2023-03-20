@@ -4,7 +4,7 @@
 
 #define F_MCLK 1000000 //macro for MCLK
 #define F_SMCLK 1000000 //macro for SMCLK
-#define F_ACLK 125000 //macro for ACLK
+#define F_ACLK 32768 //macro for ACLK
 
 /**
  * @brief System Init function
@@ -17,16 +17,15 @@ void sysInit(void)
 
     _disable_interrupt();
 
+    initGPIO(); //init GPIO before ports get overwritten??
+
     // Initialize clocks
     initDCOClock(DCO_1MHz);
-    //initLFXT1();
+    initLFXT1();
 
     initMCLK(MCLK_DCO, DIV_1);
     initSMCLK(SMCLK_DCO, DIV_1);    
-    initACLK(DIV_8); //set clock to 125000
-    //! Need a watch crystal to get ACLK working properly. We'll clock it off DCO for now...
-
-    initUARTA();
+    initACLK(DIV_1); //set clock to 125000
 
     _enable_interrupt();
 }
@@ -61,7 +60,7 @@ void initDCOClock(enum DCO_FREQ dcoFreq)
 
     BCSCTL1 |= XT2OFF; //ensure XT2 off.
 
-    __delay_cycles(200); //Safe time to wait for the DCO to stabilise. Can be shortened in a pinch
+    __delay_cycles(15); //Safe time to wait for the DCO to stabilise. Can be shortened in a pinch
 }
 
 /**
@@ -72,6 +71,11 @@ void initLFXT1(void)
 {
     BCSCTL3 = 0x00;
     BCSCTL3 |= XCAP_3; //set caps to 12.5pF
+    while (BCSCTL3 & BIT1)
+    {
+        _NOP(); //wait for LFXT to stabilise.
+    }
+    
 }
 
 /**

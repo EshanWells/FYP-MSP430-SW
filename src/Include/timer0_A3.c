@@ -12,7 +12,7 @@ void timer0Counter0(uint16_t delay, uint8_t code)
     setTimer0Code0(code); //experiment to see if we can pass some data through this.
     // set up Timer0_A3
     TA0CCR0 = delay;      // set compare register to desired delay
-    TA0CTL = TASSEL_2 + ID_3; // use SMCLK as source, div 8
+    TA0CTL = TASSEL_1 + ID_0; // use SMCLK as source, div 8
 
     // clear any pending interrupts and enable global interrupts
     TA0CCTL0 = CCIE;          // enable timer interrupt
@@ -47,7 +47,7 @@ void blinkLED(void)
 {
     static volatile uint8_t count = 0;
     LED_TGLE;
-    UARTSend(count++, 1);
+    //UARTSend(count++, 1);
     startTimer();
 }
 
