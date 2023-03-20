@@ -6,4 +6,6 @@
 
 void initUart(void);
 
+void uartPrintString(char* str, uint8_t size);
+
 #endif

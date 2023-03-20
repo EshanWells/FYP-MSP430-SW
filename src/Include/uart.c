@@ -21,4 +21,15 @@ __interrupt void UART_RX_ISR(void)
 {
     while (!(IFG2 & UCA0TXIFG));                  // USCI_A0 TX buffer ready?
     UCA0TXBUF = UCA0RXBUF; // TX -> RXed character
+    LED_TGLE;
+}
+
+void uartPrintString(char* str, uint8_t size)
+{
+    int i;
+    for (i = 0; i < size; i++)
+    {
+        while (!(IFG2 & UCA0TXIFG));                  // USCI_A0 TX buffer ready?
+        UCA0TXBUF = str[i]; // TX -> RXed character
+    }
 }

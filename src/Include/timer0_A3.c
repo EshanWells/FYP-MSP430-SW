@@ -43,10 +43,13 @@ __interrupt void Timer_A0_CCR0_ISR(void)
     blinkLED();
 }
 
+char testMessage[] = {"Hello World!\n"};
+
 void blinkLED(void)
 {
     static volatile uint8_t count = 0;
     LED_TGLE;
+    uartPrintString(testMessage, 13);
 }
 
 static volatile uint8_t timerCode = 0;
