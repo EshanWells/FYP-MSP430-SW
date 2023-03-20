@@ -14,7 +14,7 @@ void initUARTA(void)
    UCA0BR1 = 0; // Set baud rate to 9600 with 1MHz clock
    UCA0MCTL = UCBRS0; // Modulation UCBRSx = 1
    UCA0CTL1 &= ~UCSWRST; // Initialize USCI state machine
-   IE2 |= UCA0RXIE; // Enable USCI_A0 RX interrupt
+   //IE2 |= UCA0RXIE; // Enable USCI_A0 RX interrupt
 }
 
 void UARTSend(unsigned char *TxArray, unsigned char ArrayLength)

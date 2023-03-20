@@ -5,6 +5,9 @@
 
 void timer0Counter0(uint16_t delay, uint8_t code);
 
+void startTimer(void);
+void stopTimer(void);
+
 void blinkLED(void);
 
 uint8_t getTimer0Code0(void);

@@ -7,9 +7,21 @@
 #include "core.h"
 
 void initGPIO(void);
-void setPinHigh(uint8_t port, uint8_t pin);
-void setPinLow(uint8_t port, uint8_t pin);
-void togglePin(uint8_t port, uint8_t pin);
-uint8_t readPin(uint8_t port, uint8_t pin);
+
+#define LED_HIGH P1OUT |= BIT0
+#define LED_LOW P1OUT &= ~BIT0
+#define LED_TGLE P1OUT ^= BIT0
+
+#define UART_1_HIGH P2OUT |= BIT2
+#define UART_1_LOW P2OUT &= ~BIT2
+#define UART_1_TGLE P2OUT ^= BIT2
+
+#define UART_2_HIGH P2OUT |= BIT3
+#define UART_2_LOW P2OUT &= ~BIT3
+#define UART_2_TGLE P2OUT ^= BIT3
+
+#define EE_1_HIGH P2OUT |= BIT4
+#define EE_1_LOW P2OUT &= ~BIT4
+#define EE_1_TGLE P2OUT ^= BIT4
 
 #endif

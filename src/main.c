@@ -13,7 +13,7 @@ int main(void)
 
 	timer0Counter0(62500,1);
 	while(1){
-	    LPM1;
+	    //LPM1;
 	}
 }
 
