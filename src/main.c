@@ -12,8 +12,7 @@ int main(void)
 
 	timer0Counter0(16384,1);
 
-	while(1)
-	{
-		
-	}
+	__bis_SR_register(LPM3_bits + GIE);
+
+	while(1);
 }
