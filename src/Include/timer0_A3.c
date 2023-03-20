@@ -49,7 +49,7 @@ void blinkLED(void)
 {
     static volatile uint8_t count = 0;
     LED_TGLE;
-    uartPrintString(testMessage, 13);
+    uartPrintString(testMessage, 13); //Hello world
 }
 
 static volatile uint8_t timerCode = 0;
