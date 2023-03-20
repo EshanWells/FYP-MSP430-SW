@@ -25,7 +25,9 @@ void sysInit(void)
 
     initMCLK(MCLK_DCO, DIV_1);
     initSMCLK(SMCLK_DCO, DIV_1);    
-    initACLK(DIV_1); //set clock to 125000
+    initACLK(DIV_1); //set clock
+
+    initUart();
 
     _enable_interrupt();
 }
