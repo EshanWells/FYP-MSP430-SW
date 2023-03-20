@@ -16,3 +16,4 @@ In a very loose order
  - [ ] EEPROM Driver
  - [ ] SLL Alg
  - [ ] Power Saving
+ - [ ] Implement ACLK, fix clocks and timers
