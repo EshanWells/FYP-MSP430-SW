@@ -33,7 +33,7 @@ enum SMCLK_SEL {
 
 void sysInit(void);
 void initDCOClock(enum DCO_FREQ dcoFreq);
-void LFXT1_32kHz(void);
+void initLFXT1(void);
 
 void initMCLK(enum MCLK_SEL src, enum DIV_SEL div);
 void initSMCLK(enum SMCLK_SEL src, enum DIV_SEL div);

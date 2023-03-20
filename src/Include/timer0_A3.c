@@ -48,7 +48,7 @@ void blinkLED(void)
     static volatile uint8_t count = 0;
     LED_TGLE;
     //UARTSend(count++, 1);
-    startTimer();
+    //startTimer();
 }
 
 static volatile uint8_t timerCode = 0;
