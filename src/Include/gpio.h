@@ -6,6 +6,10 @@
 
 #include "core.h"
 
+/**
+ * @brief initialise gpio pins, without consideration for other peripherals.
+ * 
+ */
 void initGPIO(void);
 
 #define LED_HIGH P1OUT |= BIT0

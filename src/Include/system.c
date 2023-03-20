@@ -6,10 +6,6 @@
 #define F_SMCLK 1000000 //macro for SMCLK
 #define F_ACLK 32768 //macro for ACLK
 
-/**
- * @brief System Init function
- * 
- */
 void sysInit(void)
 {
     // Stop watchdog timer
@@ -32,11 +28,6 @@ void sysInit(void)
     _enable_interrupt();
 }
 
-/**
- * @brief DCO Clock setup
- * 
- * @param dcoFreq set using DCO_FREQ enum.
- */
 void initDCOClock(enum DCO_FREQ dcoFreq)
 {
     switch (dcoFreq) {
@@ -65,10 +56,6 @@ void initDCOClock(enum DCO_FREQ dcoFreq)
     __delay_cycles(15); //Safe time to wait for the DCO to stabilise. Can be shortened in a pinch
 }
 
-/**
- * @brief start the LFXT oscillator with an external crystal.
- * 
- */
 void initLFXT1(void)
 {
     BCSCTL3 = 0x00;
@@ -80,12 +67,6 @@ void initLFXT1(void)
     
 }
 
-/**
- * @brief set source and divider for MCLK
- * 
- * @param src 
- * @param div 
- */
 void initMCLK(enum MCLK_SEL src, enum DIV_SEL div)
 {
     switch(src)
@@ -118,12 +99,6 @@ void initMCLK(enum MCLK_SEL src, enum DIV_SEL div)
     }
 }
 
-/**
- * @brief set source for SMCLK
- * 
- * @param src 
- * @param div 
- */
 void initSMCLK(enum SMCLK_SEL src, enum DIV_SEL div)
 {
     switch(src)
@@ -153,11 +128,6 @@ void initSMCLK(enum SMCLK_SEL src, enum DIV_SEL div)
     }
 }
 
-/**
- * @brief set source for ACLK
- * 
- * @param div 
- */
 void initACLK(enum DIV_SEL div)
 {
     switch(div)

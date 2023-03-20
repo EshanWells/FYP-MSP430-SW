@@ -2,11 +2,6 @@
 
 #include "core.h"
 
-/**
- * @brief 
- * 
- * @param delay expressed as multiples of 8 us
- */
 void timer0Counter0(uint16_t delay, uint8_t code)
 {
     setTimer0Code0(code); //experiment to see if we can pass some data through this.
@@ -32,26 +27,6 @@ void stopTimer(void)
     TA0CTL &= ~MC_1;
 }
 
-/**
- * @brief ISR for timer
- * 
- */
-#pragma vector = TIMER0_A0_VECTOR
-__interrupt void Timer_A0_CCR0_ISR(void)
-{
-    TA0CCTL0 &= ~CCIFG;
-    blinkLED();
-}
-
-char testMessage[] = {"Hello World!\n"};
-
-void blinkLED(void)
-{
-    static volatile uint8_t count = 0;
-    LED_TGLE;
-    uartPrintString(testMessage, 13);
-}
-
 static volatile uint8_t timerCode = 0;
 
 uint8_t getTimer0Code0(void)
@@ -62,4 +37,16 @@ uint8_t getTimer0Code0(void)
 void setTimer0Code0(uint8_t set)
 {
     timerCode = set;
+}
+
+/*****************************************/
+
+#pragma vector = TIMER0_A0_VECTOR
+__interrupt void Timer_A0_CCR0_ISR(void)
+{
+    TA0CCTL0 &= ~CCIFG;
+    static volatile uint8_t count = 0;
+    LED_TGLE;
+    //char testMessage[] = {"Hello World!\n"};
+    //uartPrintString(testMessage, 13);
 }

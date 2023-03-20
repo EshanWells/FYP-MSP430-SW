@@ -1,10 +1,6 @@
 #include "gpio.h"
 #include "core.h"
 
-/**
- * @brief init GPIO
- * 
- */
 void initGPIO(void)
 {
     P1DIR |= BIT0 + BIT3 + BIT4 + BIT5;
