@@ -33,5 +33,5 @@ __interrupt void UART_RX_ISR(void)
 {
     while (!(IFG2 & UCA0TXIFG)); // USCI_A0 TX buffer ready?
     UCA0TXBUF = UCA0RXBUF; // TX -> RXed character
-    LED_TGLE;
+    //LED_TGLE;
 }
