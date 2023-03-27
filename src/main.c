@@ -12,7 +12,10 @@ int main(void)
 
 	timer0Counter0(16384,1);
 
-	__bis_SR_register(LPM3_bits + GIE);
+	__bis_SR_register(GIE);
 
-	while(1);
+	while(1)
+	{
+	    _nop();
+	}
 }

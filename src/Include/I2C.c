@@ -46,7 +46,7 @@ void I2CTransmit (uint8_t slaveAddr, uint8_t* data, uint8_t len)
     UCB0I2CSA = slaveAddr;
     UCB0CTL1 |= UCTR + UCTXSTT;
 
-    while (UCB0CTL1 & UCTXSTT); // wait for free buffer
+    while (!(IFG2 & UCB0TXIFG)); // wait for free buffer
     uint8_t i;
     for (i = 0; i < len; i++)
     {
@@ -63,7 +63,7 @@ void I2CReceive(uint8_t slaveAddr, uint8_t *data, uint8_t len)
     UCB0CTL1 &= ~UCTR;
     UCB0CTL1 |= UCTXSTT;
 
-    while (UCB0CTL1 & UCTXSTT); //waits for start condition to be sent.
+    UCB0CTL1 |= UCTXSTT; //start condition to be sent.
 
     uint8_t i;
     for (i = 0; i < len; i++)
