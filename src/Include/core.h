@@ -13,6 +13,8 @@
 #include "msp430g2553.h"
 
 #include <stdint.h>
+#include <string.h>
+#include <stdio.h>
 
 #include "system.h"
 #include "gpio.h"

@@ -18,7 +18,7 @@ void initUart(void)
 
 void uartPrintString(char* str, uint8_t size)
 {
-    int i;
+    uint8_t i;
     for (i = 0; i < size; i++)
     {
         while (!(IFG2 & UCA0TXIFG));// USCI_A0 TX buffer ready?

@@ -41,6 +41,9 @@ void setTimer0Code0(uint8_t set)
 
 /*****************************************/
 
+#define SHA_ADDR 0x44
+#define SERNUM 0x89
+
 #pragma vector = TIMER0_A0_VECTOR
 __interrupt void Timer_A0_CCR0_ISR(void)
 {
@@ -49,11 +52,14 @@ __interrupt void Timer_A0_CCR0_ISR(void)
     LED_TGLE;
     //char testMessage[] = {"Hello World!\n"};
     //uartPrintString(testMessage, 13);
-    I2CTransmit(0x44, 0xFD, 1);
+    I2CTransmit(SHA_ADDR, SERNUM, 1);
     __delay_cycles(10000);
-    //I2CReceive(0x44, );
+    uint8_t rx_data[6] = {0};
+    I2CReceive(SHA_ADDR, rx_data, 6);
     
-    char messageHolder[128];
-    
+    char messageHolder[128] = {0};
+    sprintf(messageHolder, "Tick: %d | %d %d %d %d %d %d", count, rx_data[0], rx_data[1], rx_data[2], rx_data[3], rx_data[4], rx_data[5]);
+    uartPrintString(messageHolder, 128);
+    count++;
     
 }
