@@ -49,4 +49,11 @@ __interrupt void Timer_A0_CCR0_ISR(void)
     LED_TGLE;
     //char testMessage[] = {"Hello World!\n"};
     //uartPrintString(testMessage, 13);
+    I2CTransmit(0x44, 0xFD, 1);
+    __delay_cycles(10000);
+    //I2CReceive(0x44, );
+    
+    char messageHolder[128];
+    
+    
 }

@@ -18,5 +18,6 @@
 #include "gpio.h"
 #include "timer0_A3.h"
 #include "uart.h"
+#include "I2C.h"
 
 #endif /* SRC_INCLUDE_CORE_H_ */

@@ -41,16 +41,17 @@ void I2CWrite (uint8_t slaveAddr, uint8_t* reg_addr, uint8_t reg_len, uint8_t* d
     UCB0CTL1
 }*/
 
-void I2CTransmit (uint8_t slaveAddr, uint8_t* data, uint8_t len))
+void I2CTransmit (uint8_t slaveAddr, uint8_t* data, uint8_t len)
 {
     UCB0I2CSA = slaveAddr;
     UCB0CTL1 |= UCTR + UCTXSTT;
 
-    while (UCB0CTL1 & UCTXSTT)
-        ; // wait for free buffer
-    for (uint8_t i = 0; i < len; i++)
+    while (UCB0CTL1 & UCTXSTT); // wait for free buffer
+    uint8_t i;
+    for (i = 0; i < len; i++)
     {
         UCB0TXBUF = data[i];
+        while (!(IFG2 & UCB0TXIFG));
     }
 
     UCB0CTL1 |= UCTXSTP; // stop condition
@@ -64,7 +65,8 @@ void I2CReceive(uint8_t slaveAddr, uint8_t *data, uint8_t len)
 
     while (UCB0CTL1 & UCTXSTT); //waits for start condition to be sent.
 
-    for (uint8_t 1 = 0; i < len; i++)
+    uint8_t i;
+    for (i = 0; i < len; i++)
     {
         if (i == len - 1)
         {
@@ -73,6 +75,6 @@ void I2CReceive(uint8_t slaveAddr, uint8_t *data, uint8_t len)
         }
 
         data[i] = UCB0RXBUF;
-        while(!(UCB0IFG & UCRX));
+        while(!(IFG2 & UCB0RXIFG));
     }
 }
