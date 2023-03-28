@@ -58,7 +58,7 @@ __interrupt void Timer_A0_CCR0_ISR(void)
     //I2CReceive(SHA_ADDR, rx_data, 6);
     
     char messageHolder[128] = {0};
-    sprintf(messageHolder, "Tick: %d | %d %d %d %d %d %d", count, rx_data[0], rx_data[1], rx_data[2], rx_data[3], rx_data[4], rx_data[5]);
+    sprintf(messageHolder, "Tick: %d | %d %d %d %d %d %d \n", count, rx_data[0], rx_data[1], rx_data[2], rx_data[3], rx_data[4], rx_data[5]);
     uartPrintString(messageHolder, 128);
     count++;
     
