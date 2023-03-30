@@ -22,24 +22,8 @@ inline void I2CEnable (void);
  */
 inline void I2CDisable (void);
 
-//void I2CWrite (uint8_t slaveAddr, uint8_t* reg_addr, uint8_t reg_len, uint8_t* data, uint8_t len);
+void I2CTxInit (uint8_t slaveAddr);
 
-/**
- * @brief Barebones transmit
- * 
- * @param slaveAddr only supports 7 bit adressing mode
- * @param data pointer to data, array suggested
- * @param len length
- */
-void I2CTransmit (uint8_t slaveAddr, uint8_t* data, uint8_t len);
-
-/**
- * @brief 
- * 
- * @param slaveAddr 
- * @param data 
- * @param len 
- */
-void I2CReceive (uint8_t slaveAddr, uint8_t* data, uint8_t len);
+void I2CRxInit (uint8_t slaveAddr);
 
 #endif
