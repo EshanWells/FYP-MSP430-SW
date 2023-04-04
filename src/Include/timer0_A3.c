@@ -41,8 +41,7 @@ void setTimer0Code0(uint8_t set)
 
 /*****************************************/
 
-#define MPU_ADDR 0x68
-#define SERNUM 0x75
+#define MPU6050_ADDRESS 0x68
 
 #pragma vector = TIMER0_A0_VECTOR
 __interrupt void Timer_A0_CCR0_ISR(void)
@@ -50,16 +49,14 @@ __interrupt void Timer_A0_CCR0_ISR(void)
     TA0CCTL0 &= ~CCIFG;
     static volatile uint64_t count = 0;
     LED_TGLE;
-    //char testMessage[] = {"Hello World!\n"};
-    //uartPrintString(testMessage, 13);
-    //I2CTransmit(MPU_ADDR, SERNUM, 1);
-    //__delay_cycles(10000);
-    uint8_t rx_data[6] = {0};
-    //I2CReceive(MPU_ADDR, rx_data, 1);
-    
+
+    unsigned char who_am_i = 0;
+    // read WHO_AM_I register on MPU6050
+    who_am_i = i2c_read_byte(MPU6050_ADDRESS, 0x75);    
+
     char messageHolder[128] = {0};
-    sprintf(messageHolder, "Tick: %d | %d %d %d %d %d %d \n", count, rx_data[0], rx_data[1], rx_data[2], rx_data[3], rx_data[4], rx_data[5]);
+    sprintf(messageHolder, "Tick: %d | %d %d %d %d %x %d \n", count, 1, 2, 3, 4, who_am_i, 6);
     uartPrintString(messageHolder, 128);
     count++;
-    
+
 }

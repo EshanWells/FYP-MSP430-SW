@@ -22,8 +22,10 @@ inline void I2CEnable (void);
  */
 inline void I2CDisable (void);
 
-void I2CTxInit (uint8_t slaveAddr);
+void I2CTxInit (uint8_t slaveAddr, uint8_t prescale);
 
-void I2CRxInit (uint8_t slaveAddr);
+void I2CRxInit (uint8_t slaveAddr, uint8_t prescale);
+
+unsigned char i2c_read_byte(unsigned char address, unsigned char reg);
 
 #endif
