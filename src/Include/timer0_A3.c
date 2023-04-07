@@ -47,7 +47,7 @@ void setTimer0Code0(uint8_t set)
 __interrupt void Timer_A0_CCR0_ISR(void)
 {
     TA0CCTL0 &= ~CCIFG;
-    static volatile uint64_t count = 0;
+    static volatile uint32_t count = 0;
     LED_TGLE;
 
     UCB0CTL1 |= UCTXSTT;
