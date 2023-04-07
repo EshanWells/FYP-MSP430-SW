@@ -29,7 +29,15 @@ int main(void)
       uartPrintString(messageHolder, 64);
       count++;
 
+      uint8_t rxData[3] = {0};
+
+      I2C_txInit();
       I2C_setStart();
+      UCB0TXBUF = 0x11;
+      while(!I2C_isTxBufEmpty());
+      UCB0TXBUF = 0x22;
+      while(!I2C_isTxBufEmpty());
+
       I2C_setStop();
     }
   }
