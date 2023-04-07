@@ -14,7 +14,8 @@ int main(void)
 
   __bis_SR_register(GIE);
 
-  // Is the head still detatched???
+
+  I2C_setSlaveAddr(0b01010000);
 
   while (1)
   {
@@ -29,6 +30,8 @@ int main(void)
       count++;
 
       I2C_setStart();
+      while(I2C_isStart());
+      I2C_setStop();
     }
   }
 }
