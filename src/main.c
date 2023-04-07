@@ -14,6 +14,8 @@ int main(void)
 
 	__bis_SR_register(GIE);
 
+  //Is the head still detatched???
+
 	while(1)
 	{
     if(doTickRoutine())
