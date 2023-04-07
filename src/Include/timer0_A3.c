@@ -50,13 +50,11 @@ __interrupt void Timer_A0_CCR0_ISR(void)
     static volatile uint64_t count = 0;
     LED_TGLE;
 
-    unsigned char who_am_i = 0;
-    // read WHO_AM_I register on MPU6050
-    who_am_i = i2c_read_byte(MPU6050_ADDRESS, 0x75);    
+    UCB0CTL1 |= UCTXSTT;
 
-    char messageHolder[128] = {0};
-    sprintf(messageHolder, "Tick: %d | %d %d %d %d %x %d \n", count, 1, 2, 3, 4, who_am_i, 6);
-    uartPrintString(messageHolder, 128);
+    char messageHolder[64] = {0};
+    sprintf(messageHolder, "Tick: %d | %d %d %d %d %x %d \n", count, 0x1, 0x2, 0x3, 0x4, 0x5, 0x6);
+    uartPrintString(messageHolder, 64);
     count++;
 
 }
