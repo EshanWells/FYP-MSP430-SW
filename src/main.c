@@ -18,6 +18,8 @@ int main(void)
 
   I2C_setSlaveAddr(0x50);
 
+  //I really hope i fixed this.
+
 	while(1)
 	{
 	    //_nop();
