@@ -25,7 +25,7 @@ void sysInit(void)
 
     initUart();
 
-    initI2C();
+    I2C_init();
 
     _enable_interrupt();
 }

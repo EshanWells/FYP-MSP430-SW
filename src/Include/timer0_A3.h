@@ -38,4 +38,6 @@ uint8_t getTimer0Code0(void);
  */
 void setTimer0Code0(uint8_t set);
 
+uint8_t doTickRoutine(void);
+
 #endif

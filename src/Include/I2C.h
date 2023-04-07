@@ -1,6 +1,8 @@
 #ifndef I2C_H_
 #define I2C_H_
 
+#include "core.h"
+
 void I2C_init(void);
 inline void I2C_enable(void);
 inline void I2C_disable(void);

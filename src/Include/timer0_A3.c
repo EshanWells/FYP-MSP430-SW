@@ -54,4 +54,5 @@ uint8_t doTickRoutine(void)
 __interrupt void Timer_A0_CCR0_ISR(void)
 {
     TA0CCTL0 &= ~CCIFG;
+    T0A3IFG1 = 1;
 }
