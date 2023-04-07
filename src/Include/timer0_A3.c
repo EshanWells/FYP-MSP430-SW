@@ -52,4 +52,17 @@ uint8_t doTickRoutine(void)
 __interrupt void Timer_A0_CCR0_ISR(void)
 {
     TA0CCTL0 &= ~CCIFG;
+<<<<<<< HEAD
+=======
+    static volatile uint64_t count = 0;
+    LED_TGLE;
+
+    UCB0CTL1 |= UCTXSTT;
+
+    char messageHolder[64] = {0};
+    sprintf(messageHolder, "Tick: %d | %d %d %d %d %x %d \n", count, 0x1, 0x2, 0x3, 0x4, 0x5, 0x6);
+    uartPrintString(messageHolder, 64);
+    count++;
+
+>>>>>>> 4be23b0b9843936b9deef000b709cabadb211757
 }

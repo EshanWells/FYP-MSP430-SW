@@ -2,10 +2,12 @@
 
 #include "core.h"
 #include "gpio.h"
-
-/**
+/*
  * main.c
- */
+*/
+
+uint8_t rxedData[] = {0, 0, 0};
+
 int main(void)
 {
 	sysInit();
@@ -13,6 +15,10 @@ int main(void)
 	timer0Counter0(16384,1);
 
 	__bis_SR_register(GIE);
+
+  I2C_setSlaveAddr(0x50);
+
+  //I really hope i fixed this.
 
 	while(1)
 	{
