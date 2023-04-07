@@ -23,7 +23,7 @@ int main(void)
       static volatile uint16_t count = 0;
       LED_TGLE;
 
-      char messageHolder[128] = {0};
+      char messageHolder[64] = {0};
       sprintf(messageHolder, "Tick: %d | %d %d %d %d %x %d \n", count, 1, 2, 3, 4, who_am_i, 6);
       uartPrintString(messageHolder, 64);
       count++;
