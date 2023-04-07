@@ -39,6 +39,12 @@ int main(void)
       while(!I2C_isTxBufEmpty());
 
       I2C_setStop();
+      while(I2C_isStop());
+      I2C_rxInit();
+      I2C_setStart();
+      while(!I2C_isRxBufFull());
+      rxData[0] = UCB0RXBUF;
+      I2C_setStop();
     }
   }
 }
