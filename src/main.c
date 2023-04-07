@@ -30,7 +30,6 @@ int main(void)
       count++;
 
       I2C_setStart();
-      while(I2C_isStart());
       I2C_setStop();
     }
   }
