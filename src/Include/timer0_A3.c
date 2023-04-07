@@ -39,14 +39,16 @@ void setTimer0Code0(uint8_t set)
     timerCode = set;
 }
 
+uint8_t T0A3FG1 = 0;
+
 uint8_t doTickRoutine(void)
 {
-    
+    uint8_t rc = T0A3FG1;
+    T0A3FG1 = 0;
+    return rc;
 }
 
 /*****************************************/
-
-#define MPU6050_ADDRESS 0x68
 
 #pragma vector = TIMER0_A0_VECTOR
 __interrupt void Timer_A0_CCR0_ISR(void)

@@ -14,6 +14,8 @@ int main(void)
 
 	__bis_SR_register(GIE);
 
+  //need to rescue this.
+
 	while(1)
 	{
     if(doTickRoutine())

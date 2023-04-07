@@ -6,7 +6,8 @@
 	],
 	"settings": {
 		"files.associations": {
-			"core.h": "c"
+			"core.h": "c",
+			"timer0_a3.h": "c"
 		}
 	}
 }
