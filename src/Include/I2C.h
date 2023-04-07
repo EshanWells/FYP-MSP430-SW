@@ -1,31 +1,21 @@
 #ifndef I2C_H_
 #define I2C_H_
 
-#include <msp430.h>
-#include "core.h"
+void I2C_init(void);
+inline void I2C_enable(void);
+inline void I2C_disable(void);
+inline void I2C_setStart(void);
+inline uint8_t I2C_isStart(void);
+inline void I2C_setStop(void);
+inline uint8_t I2C_isStop(void);
+inline void I2C_setNack(void);
+inline uint8_t I2C_isTxBufEmpty(void);
+inline uint8_t I2C_isRxBufFull(void);
+inline uint8_t I2C_isBusBusy(void);
+inline uint8_t I2C_rxedNack(void);
+void I2C_txInit(void);
+void I2C_rxInit(void);
+void I2C_setSlaveAddr(uint8_t);
+void I2C_transmit(uint8_t);
 
-/**
- * @brief initialise I2C as a master, 100khz
- * 
- */
-void initI2C (void);
-
-/**
- * @brief enable module
- * 
- */
-inline void I2CEnable (void);
-
-/**
- * @brief disable module
- * 
- */
-inline void I2CDisable (void);
-
-void I2CTxInit (uint8_t slaveAddr, uint8_t prescale);
-
-void I2CRxInit (uint8_t slaveAddr, uint8_t prescale);
-
-unsigned char i2c_read_byte(unsigned char address, unsigned char reg);
-
-#endif
+#endif //I2C_H
