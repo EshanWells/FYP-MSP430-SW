@@ -6,6 +6,9 @@
 /**
  * main.c
  */
+
+#define EE_ADDR 0x50
+
 int main(void)
 {
   sysInit();
@@ -24,28 +27,19 @@ int main(void)
   {
     if (doTickRoutine())
     {
-      static volatile uint16_t count = 0;
+      static uint16_t count = 0;
       LED_TGLE;
 
+      uint8_t rxData[3] = {0};
+      uint8_t txData[] = {0x11, 0x22};
+
+      I2C_write(EE_ADDR, txData, 2);
+      I2C_read(EE_ADDR, rxData, 3);
+
       char messageHolder[64] = {0};
-      sprintf(messageHolder, "Tick: %d | %d %d %d %d %x %d \n", count, 1, 2, 3, 4, 5, 6);
+      sprintf(messageHolder, "Tick: %d | %d %d %d %d %d %d \n", count, 1, 2, 3, rxData[0], rxData[1], rxData[2]);
       uartPrintString(messageHolder, 64);
       count++;
-
-      uint8_t rxData[3] = {0};
-
-      I2C_txInit();
-      I2C_setStart();
-      I2C_transmit(0x11);
-      I2C_transmit(0x22);
-      I2C_setStop();
-      
-      I2C_rxInit();
-      I2C_setStart();
-      rxData[0] =  I2C_receive();
-      rxData[1] =  I2C_receive();
-      rxData[2] =  I2C_receive();
-      I2C_setStop();
     }
   }
 }

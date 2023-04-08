@@ -148,6 +148,6 @@ void I2C_read(uint8_t slaveAddr, uint8_t *rxData, uint8_t dataLength)
     {
         rxData[index] = I2C_receive();
     }
-    while(!I2C_isRxBufFull);
     I2C_setStop();
+    while(I2C_isStop());
 }
