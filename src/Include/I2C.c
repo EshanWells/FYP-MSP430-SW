@@ -136,6 +136,7 @@ void I2C_write(uint8_t slaveAddr, uint8_t *txData, uint8_t dataLength)
         I2C_transmit(txData[index]);
     }
     I2C_setStop();
+    while(I2C_isStop());
 }
 
 void I2C_read(uint8_t slaveAddr, uint8_t *rxData, uint8_t dataLength)

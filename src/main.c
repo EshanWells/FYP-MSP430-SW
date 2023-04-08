@@ -40,7 +40,6 @@ int main(void)
       I2C_transmit(0x22);
       I2C_setStop();
       
-      while(I2C_isStop());
       I2C_rxInit();
       I2C_setStart();
       rxData[0] =  I2C_receive();
