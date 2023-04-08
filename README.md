@@ -10,7 +10,7 @@ In a very loose order
  - [x] Interrupt blink
  - [x] UART Driver
  - [X] Fix GPIO.c and .h
- - [ ] Implement I2C Drivers
+ - [X] Implement I2C Drivers
  - [ ] SHT40 Driver
  - [ ] RTC Driver
  - [ ] EEPROM Driver
