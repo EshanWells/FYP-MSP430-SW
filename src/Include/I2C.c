@@ -1,7 +1,22 @@
+/**
+ * @file I2C.c
+ * @author Eshan Wells (eshanwells@gmail.com)
+ * @brief I2C source for USCIB module
+ * @version 0.1
+ * @date 2023-04-08
+ * 
+ * @copyright Copyright (c) 2023
+ * 
+ */
+*/
+
 /*
 I've written this one almost completely myself. It's really messy. And it's taken a good couple of weeks to get happy.
 
 The logic analyzer was instrumental in getting this going, as none of the examples worked as expected.
+
+As it is, some of the timings don't entirely work, and I'd love to be able to get
+repeated start conditions working. one thing to work on, I suppose.
 
 As of 08/04/2023, this is working as I'd hope.
 */
@@ -68,6 +83,7 @@ inline uint8_t I2C_isStop(void)
     return (UCB0CTL1 & UCTXSTP);
 }
 
+//? This doesn't get used currently
 inline void I2C_setNack(void)
 {
     UCB0CTL1 |= UCTXNACK;
@@ -83,11 +99,13 @@ inline uint8_t I2C_isRxBufFull(void)
     return (IFG2 & UCB0RXIFG);
 }
 
+//? this doesn't get used currently.
 inline uint8_t I2C_isBusBusy(void)
 {
     return (UCB0STAT & UCBBUSY);
 }
 
+//? Use this to implement NACK checking on master operations?
 inline uint8_t I2C_rxedNack(void)
 {
     return (UCB0CTL1 & UCNACKIFG);
@@ -128,6 +146,7 @@ uint8_t I2C_receive(void)
     return rxData;
 }
 
+//TODO Condier checking for NACKS in case something is broken
 void I2C_write(uint8_t slaveAddr, uint8_t *txData, uint8_t dataLength)
 {
     I2C_txInit(slaveAddr);
@@ -141,6 +160,7 @@ void I2C_write(uint8_t slaveAddr, uint8_t *txData, uint8_t dataLength)
     while(I2C_isStop());
 }
 
+//TODO consider checking for NACKS incase something is broken
 void I2C_read(uint8_t slaveAddr, uint8_t *rxData, uint8_t dataLength)
 {
     I2C_rxInit(slaveAddr);

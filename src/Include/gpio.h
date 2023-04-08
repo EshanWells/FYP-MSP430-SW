@@ -1,3 +1,14 @@
+/**
+ * @file gpio.h
+ * @author Eshan Wells (eshanwells@gmail.com)
+ * @brief GPIO header with FYP specific macros
+ * @version 0.1
+ * @date 2023-04-08
+ * 
+ * @copyright Copyright (c) 2023
+ * 
+ */
+
 #ifndef GPIO_H
 #define GPIO_H
 

@@ -1,3 +1,14 @@
+/**
+ * @file gpio.c
+ * @author Eshan Wells (eshanwells@gmail.com)
+ * @brief GPIO source
+ * @version 0.1
+ * @date 2023-04-08
+ * 
+ * @copyright Copyright (c) 2023
+ * 
+ */
+
 #include "gpio.h"
 #include "core.h"
 

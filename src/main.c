@@ -1,3 +1,15 @@
+/**
+ * @file main.c
+ * @author Eshan Wells (eshanwells@gmail.com)
+ * @brief For MSP430G2553
+ *        main.c for FYP at DMU. Low power shipping container environment logger.
+ * @version 0.1
+ * @date 2023-04-08
+ * 
+ * @copyright Copyright (c) 2023
+ * 
+ */
+
 #include <msp430.h>
 
 #include "core.h"

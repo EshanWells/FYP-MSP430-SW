@@ -1,3 +1,14 @@
+/**
+ * @file I2C.h
+ * @author Eshan Wells (eshanwells@gmail.com)
+ * @brief I2C header for USCIB module
+ * @version 0.1
+ * @date 2023-04-08
+ * 
+ * @copyright Copyright (c) 2023
+ * 
+ */
+
 #ifndef I2C_H_
 #define I2C_H_
 #include "core.h"

@@ -1,9 +1,15 @@
-/*
- * core.h
- *
- *  Created on: 18 Mar 2023
- *      Author: Eshan
+/**
+ * @file core.h
+ * @author Eshan Wells (eshanwells@gmail.com)
+ * @brief key includes for project.
+ * @version 0.1
+ * @date 2023-04-08
+ * 
+ * @copyright Copyright (c) 2023
+ * 
  */
+
+
 
 #ifndef SRC_INCLUDE_CORE_H_
 #define SRC_INCLUDE_CORE_H_

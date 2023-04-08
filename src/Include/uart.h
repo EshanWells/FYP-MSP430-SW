@@ -1,3 +1,14 @@
+/**
+ * @file uart.h
+ * @author Eshan Wells (eshanwells@gmail.com)
+ * @brief header for UART using USCIA
+ * @version 0.1
+ * @date 2023-04-08
+ * 
+ * @copyright Copyright (c) 2023
+ * 
+ */
+
 #ifndef UART_H_
 #define UART_H_
 

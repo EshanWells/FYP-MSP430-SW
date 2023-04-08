@@ -1,3 +1,14 @@
+/**
+ * @file system.h
+ * @author Eshan Wells (eshanwells@gmail.com)
+ * @brief header file for system
+ * @version 0.1
+ * @date 2023-04-08
+ * 
+ * @copyright Copyright (c) 2023
+ * 
+ */
+
 #ifndef SYSTEM_H
 #define SYSTEM_H
 

@@ -1,3 +1,14 @@
+/**
+ * @file timer0_A3.h
+ * @author Eshan Wells (eshanwells@gmail.com)
+ * @brief header for Timer0_A3
+ * @version 0.1
+ * @date 2023-04-08
+ * 
+ * @copyright Copyright (c) 2023
+ * 
+ */
+
 #ifndef T0A3_H_
 #define T0A3_H_
 
@@ -22,6 +33,10 @@ void startTimer(void);
  */
 void stopTimer(void);
 
+/**
+ * @brief toggle P1.0
+ * 
+ */
 void blinkLED(void);
 
 /**

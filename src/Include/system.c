@@ -1,3 +1,14 @@
+/**
+ * @file system.c
+ * @author Eshan Wells (eshanwells@gmail.com)
+ * @brief contains inits for system, clock generators and sources. May actually be usable in other projects.
+ * @version 0.1
+ * @date 2023-04-08
+ * 
+ * @copyright Copyright (c) 2023
+ * 
+ */
+
 #include "system.h"
 
 #include "core.h"
