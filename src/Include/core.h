@@ -21,5 +21,6 @@
 #include "timer0_A3.h"
 #include "uart.h"
 #include "I2C.h"
+#include "EE.h"
 
 #endif /* SRC_INCLUDE_CORE_H_ */
