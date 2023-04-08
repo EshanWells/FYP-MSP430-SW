@@ -2,6 +2,8 @@
 I've written this one almost completely myself. It's really messy. And it's taken a good couple of weeks to get happy.
 
 The logic analyzer was instrumental in getting this going, as none of the examples worked as expected.
+
+As of 08/04/2023, this is working as I'd hope.
 */
 
 #include "I2C.h"
