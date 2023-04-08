@@ -17,6 +17,9 @@ int main(void)
 
   I2C_setSlaveAddr(0b01010000);
 
+  char startMessage[] = "\nContainer Logger Software Init Complete\n";
+  uartPrintString(startMessage, strlen(startMessage));
+
   while (1)
   {
     if (doTickRoutine())
@@ -33,17 +36,16 @@ int main(void)
 
       I2C_txInit();
       I2C_setStart();
-      UCB0TXBUF = 0x11;
-      while(!I2C_isTxBufEmpty());
-      UCB0TXBUF = 0x22;
-      while(!I2C_isTxBufEmpty());
-
+      I2C_transmit(0x11);
+      I2C_transmit(0x22);
       I2C_setStop();
+      
       while(I2C_isStop());
       I2C_rxInit();
       I2C_setStart();
-      while(!I2C_isRxBufFull());
-      rxData[0] = UCB0RXBUF;
+      rxData[0] =  I2C_receive();
+      rxData[1] =  I2C_receive();
+      rxData[2] =  I2C_receive();
       I2C_setStop();
     }
   }
