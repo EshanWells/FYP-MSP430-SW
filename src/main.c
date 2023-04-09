@@ -45,8 +45,7 @@ int main(void)
       uint8_t rxData[3] = {0};
       uint8_t txData[] = {0x11, 0x22};
 
-      I2C_write(EE_ADDR, txData, 2);
-      I2C_read(EE_ADDR, rxData, 3);
+      EE_read(0x1123, rxData, 3);
 
       char messageHolder[64] = {0};
       sprintf(messageHolder, "Tick: %d | %d %d %d %d %d %d \n", count, 1, 2, 3, rxData[0], rxData[1], rxData[2]);

@@ -11,7 +11,12 @@
 
 #include "EE.h"
 
-#include "core.h"
+#define EE_I2C_ADDR 0x50
 
-
+void EE_read(uint16_t memAddr, uint8_t *pData, uint8_t length)
+{
+    uint8_t address[] = {(memAddr >> 8) & 0xFF, memAddr & 0xFF};
+    I2C_write(EE_I2C_ADDR, address, 2);
+    I2C_read(EE_I2C_ADDR, pData, length);
+}
 

@@ -8,7 +8,6 @@
  * @copyright Copyright (c) 2023
  * 
  */
-*/
 
 /*
 I've written this one almost completely myself. It's really messy. And it's taken a good couple of weeks to get happy.

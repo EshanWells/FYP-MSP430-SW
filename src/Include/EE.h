@@ -13,6 +13,6 @@
 #define EE_H_
 #include "core.h"
 
-
+void EE_read(uint16_t memAddr, uint8_t *pData, uint8_t length);
 
 #endif
