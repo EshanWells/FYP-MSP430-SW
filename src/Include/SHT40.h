@@ -22,6 +22,6 @@ typedef enum
 
 void SHT_sendCommand(SHT_COMMAND_E command);
 
-uint16_t SHT_getSerialNumber(void)
+uint16_t SHT_getSerialNumber(void);
 
 #endif
