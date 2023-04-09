@@ -44,6 +44,7 @@ int main(void)
       static uint16_t count = 0;
       LED_TGLE;
 
+      uint8_t rxData[3];
       EE_read(0x00, rxData, 2);
 
       char messageHolder[64] = {0};
