@@ -28,5 +28,6 @@
 #include "uart.h"
 #include "I2C.h"
 #include "EE.h"
+#include "SHT40.h"
 
 #endif /* SRC_INCLUDE_CORE_H_ */
