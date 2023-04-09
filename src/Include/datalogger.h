@@ -5,9 +5,13 @@
 
 typedef struct 
 {
-    uint16_t address;
-    NODE_PAYLOAD_S data;
-} NODE_S;
+    uint8_t sec;
+    uint8_t min;
+    uint8_t hr;
+    uint8_t date;
+    uint8_t month;
+    uint8_t year;
+} DATE_TIME_S;
 
 typedef struct 
 {
@@ -21,14 +25,8 @@ typedef struct
 
 typedef struct 
 {
-    uint8_t sec;
-    uint8_t min;
-    uint8_t hr;
-    uint8_t date;
-    uint8_t month;
-    uint8_t year;
-} DATE_TIME_S;
-
-
+    uint16_t address;
+    NODE_PAYLOAD_S data;
+} NODE_S;
 
 #endif
