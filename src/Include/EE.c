@@ -11,8 +11,6 @@
 
 #include "EE.h"
 
-#define EE_I2C_ADDR 0x50
-
 //in this instance, I'll assume that no read or write is gonna cross boundaries. Ultimately
 //I handle this myself in the datalogger layer. It's not ideal but it keeps stuff speedy
 //and potentially code small. Sorry future me.
@@ -32,7 +30,7 @@ void EE_write(uint16_t memAddr, uint8_t *pData, uint8_t length) //We are limited
     uint8_t address[] = {(memAddr >> 8) & 0xFF, memAddr & 0xFF};
     
     uint8_t lenToWrite = length + 2;
-    uint8_t toWrite[34];
+    uint8_t toWrite[34]; 
     toWrite[0] = address[0];
     toWrite[1] = address[1];
     uint8_t index;
