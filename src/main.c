@@ -44,12 +44,6 @@ int main(void)
       static uint16_t count = 0;
       LED_TGLE;
 
-      uint8_t pageMarker[] = "FW";
-      //EE_write(0x0000, pageMarker, 2);
-
-      uint8_t rxData[3] = {0};
-      uint8_t txData[] = {0x11, 0x22};
-
       EE_read(0x00, rxData, 2);
 
       char messageHolder[64] = {0};
