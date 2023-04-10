@@ -11,8 +11,8 @@
 
 
 
-#ifndef SRC_INCLUDE_CORE_H_
-#define SRC_INCLUDE_CORE_H_
+#ifndef FYP_CORE_H_
+#define FYP_CORE_H_
 
 
 #include <msp430.h>

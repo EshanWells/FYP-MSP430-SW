@@ -8,7 +8,8 @@
 		"files.associations": {
 			"core.h": "c",
 			"msp430g2553.h": "c",
-			"msp430.h": "c"
+			"msp430.h": "c",
+			"sht40.h": "c"
 		}
 	}
 }

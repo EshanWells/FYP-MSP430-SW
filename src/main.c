@@ -46,10 +46,10 @@ int main(void)
       uint8_t rxData[3];
       EE_read(0x00, rxData, 2);
 
-      SHT_sendCommand(SER_NUM);
+      uint16_t sweeeeeet = SHT_getSerialNumber();
 
       char messageHolder[64] = {0};
-      sprintf(messageHolder, "Tick: %d | %d %d %d %c %c %d \n", count, 1, 2, 3, rxData[0], rxData[1], rxData[2]);
+      sprintf(messageHolder, "Tick: %d | %d %d %d %c %c %d \n", count, 1, 2, 3, sweeeeeet, rxData[1], rxData[2]);
       uartPrintString(messageHolder, 64);
       count++;
     }
