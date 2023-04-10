@@ -4,9 +4,9 @@
  * @brief contains inits for system, clock generators and sources. May actually be usable in other projects.
  * @version 0.1
  * @date 2023-04-08
- * 
+ *
  * @copyright Copyright (c) 2023
- * 
+ *
  */
 
 #include "system.h"
@@ -31,7 +31,7 @@ void sysInit(void)
     initLFXT1();
 
     initMCLK(MCLK_DCO, DIV_1);
-    initSMCLK(SMCLK_DCO, DIV_1);    
+    initSMCLK(SMCLK_DCO, DIV_1);
     initACLK(DIV_1); //set clock
 
     initUart();
@@ -77,7 +77,7 @@ void initLFXT1(void)
     {
         _NOP(); //wait for LFXT to stabilise.
     }
-    
+
 }
 
 void initMCLK(enum MCLK_SEL src, enum DIV_SEL div)

@@ -4,9 +4,9 @@
  * @brief barebones HW UART driver using USCIA
  * @version 0.1
  * @date 2023-04-08
- * 
+ *
  * @copyright Copyright (c) 2023
- * 
+ *
  */
 
 #include "uart.h"

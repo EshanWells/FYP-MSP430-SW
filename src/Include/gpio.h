@@ -4,9 +4,9 @@
  * @brief GPIO header with FYP specific macros
  * @version 0.1
  * @date 2023-04-08
- * 
+ *
  * @copyright Copyright (c) 2023
- * 
+ *
  */
 
 #ifndef GPIO_H
@@ -19,7 +19,7 @@
 
 /**
  * @brief initialise gpio pins, without consideration for other peripherals.
- * 
+ *
  */
 void initGPIO(void);
 

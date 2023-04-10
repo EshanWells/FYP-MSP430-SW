@@ -4,9 +4,9 @@
  * @brief barebones Timer driver with one CC interrupt configured.
  * @version 0.1
  * @date 2023-04-08
- * 
+ *
  * @copyright Copyright (c) 2023
- * 
+ *
  */
 
 #include "timer0_A3.h"

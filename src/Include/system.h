@@ -4,9 +4,9 @@
  * @brief header file for system
  * @version 0.1
  * @date 2023-04-08
- * 
+ *
  * @copyright Copyright (c) 2023
- * 
+ *
  */
 
 #ifndef SYSTEM_H
@@ -43,43 +43,43 @@ enum SMCLK_SEL {
 
 /**
  * @brief System Init function
- * 
+ *
  */
 void sysInit(void);
 
 /**
  * @brief DCO Clock setup
- * 
+ *
  * @param dcoFreq set using DCO_FREQ enum.
  */
 void initDCOClock(enum DCO_FREQ dcoFreq);
 
 /**
  * @brief start the LFXT oscillator with an external watch crystal.
- * 
+ *
  */
 void initLFXT1(void);
 
 /**
  * @brief set source and divider for MCLK
- * 
- * @param src 
- * @param div 
+ *
+ * @param src
+ * @param div
  */
 void initMCLK(enum MCLK_SEL src, enum DIV_SEL div);
 
 /**
  * @brief set source for SMCLK
- * 
- * @param src 
- * @param div 
+ *
+ * @param src
+ * @param div
  */
 void initSMCLK(enum SMCLK_SEL src, enum DIV_SEL div);
 
 /**
  * @brief set source for ACLK
- * 
- * @param div 
+ *
+ * @param div
  */
 void initACLK(enum DIV_SEL div);
 

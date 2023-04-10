@@ -4,9 +4,9 @@
  * @brief Source file for 24LC512 EEPROM. May work with other 24 series. Requires I2C library.
  * @version 0.1
  * @date 2023-04-08
- * 
+ *
  * @copyright Copyright (c) 2023
- * 
+ *
  */
 
 #include "EE.h"
@@ -28,9 +28,9 @@ void EE_read(uint16_t memAddr, uint8_t *pData, uint8_t length)
 void EE_write(uint16_t memAddr, uint8_t *pData, uint8_t length) //We are limited to 32bytes + address for writes. that's fine really.
 {
     uint8_t address[] = {(memAddr >> 8) & 0xFF, memAddr & 0xFF};
-    
+
     uint8_t lenToWrite = length + 2;
-    uint8_t toWrite[34]; 
+    uint8_t toWrite[34];
     toWrite[0] = address[0];
     toWrite[1] = address[1];
     uint8_t index;
@@ -38,7 +38,7 @@ void EE_write(uint16_t memAddr, uint8_t *pData, uint8_t length) //We are limited
     {
         toWrite[(index+2)] = pData[index];
     }
-    
+
     I2C_write(EE_I2C_ADDR, toWrite, lenToWrite);
 
 }

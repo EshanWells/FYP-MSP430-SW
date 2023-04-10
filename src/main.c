@@ -5,15 +5,14 @@
  *        main.c for FYP at DMU. Low power shipping container environment logger.
  * @version 0.1
  * @date 2023-04-08
- * 
+ *
  * @copyright Copyright (c) 2023
- * 
+ *
  */
 
 #include <msp430.h>
 
 #include "core.h"
-#include "gpio.h"
 
 /**
  * main.c
@@ -35,7 +34,7 @@ int main(void)
 
   char startMessage[] = "\nContainer Logger Software Init Complete\n";
   uartPrintString(startMessage, strlen(startMessage));
-  
+
 
   while (1)
   {

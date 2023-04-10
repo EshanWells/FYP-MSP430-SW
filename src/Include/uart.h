@@ -4,9 +4,9 @@
  * @brief header for UART using USCIA
  * @version 0.1
  * @date 2023-04-08
- * 
+ *
  * @copyright Copyright (c) 2023
- * 
+ *
  */
 
 #ifndef UART_H_
@@ -17,13 +17,13 @@
 
 /**
  * @brief UART initialise
- * 
+ *
  */
 void initUart(void);
 
 /**
  * @brief simple print string to UART, good for debug
- * 
+ *
  * @param str pass the array without [], don't overthink this one
  * @param size How many bytes/chars long, where stuff like \n is a byte too.
  */
