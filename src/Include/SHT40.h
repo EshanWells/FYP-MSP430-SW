@@ -1,3 +1,14 @@
+/**
+ * @file SHT40.h
+ * @author Eshan Wells (eshanwells@gmail.com)
+ * @brief 
+ * @version 0.1
+ * @date 2023-04-10
+ * 
+ * @copyright Copyright (c) 2023
+ * 
+ */
+
 #ifndef SHT40_H_
 #define SHT40_H_
 
@@ -23,5 +34,7 @@ typedef enum
 void SHT_sendCommand(SHT_COMMAND_E command);
 
 uint16_t SHT_getSerialNumber(void);
+
+int16_t SHT_getMedReading(void);
 
 #endif

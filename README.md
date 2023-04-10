@@ -13,7 +13,10 @@ In a very loose order
  - [X] Implement I2C Drivers
  - [ ] SHT40 Driver
  - [ ] RTC Driver
- - [ ] EEPROM Driver
+ - [X] EEPROM Driver
  - [ ] SLL Alg
  - [ ] Power Saving
- - [x] Implement ACLK, fix clocks and timers
+ - [X] Implement ACLK, fix clocks and timers
+
+**Notes**
+So uint32_t ends up being the same size as uint16_t, and likewise with signed. This is a fundamental issue with stdint, so I must use long to handle 32 bits. I discovered this while debugging the SHT40.

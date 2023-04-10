@@ -1,3 +1,14 @@
+/**
+ * @file SHT40.c
+ * @author Eshan Wells (eshanwells@gmail.com)
+ * @brief 
+ * @version 0.1
+ * @date 2023-04-10
+ * 
+ * @copyright Copyright (c) 2023
+ * 
+ */
+
 #include "SHT40.h"
 
 void SHT_sendCommand(SHT_COMMAND_E command)
@@ -15,3 +26,21 @@ uint16_t SHT_getSerialNumber(void)
     uint16_t serNum = (rxData[0] << 8) | rxData[1];
     return serNum;
 }
+
+#define MULT 10
+
+int16_t SHT_getMedReading(void)
+{
+    uint8_t rxData[6];
+    SHT_sendCommand(TRH_MID);
+    __delay_cycles(5000);
+    I2C_read(SHT40_ADDR, rxData, 6);
+    
+    uint16_t tempMeas = (rxData[0] << 8) | rxData[1];
+    int16_t result = (int16_t)tempMeas * (175*MULT);
+    result /= 65535;
+    result -= (45*MULT);
+    return result;
+}
+
+
