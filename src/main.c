@@ -43,12 +43,12 @@ int main(void)
       static uint16_t count = 0;
       LED_TGLE;
 
-      uint16_t sweeeeeet = SHT_getSerialNumber();
+      //uint16_t sweeeeeet = SHT_getSerialNumber();
       SHT_RESULT_S reading;
-      reading = SHT_getMedReading();
+      //reading = SHT_getMedReading();
 
       char messageHolder[64] = {0};
-      sprintf(messageHolder, "Tick: %u | %d %d %d %x %d %d \n", count, 1, 2, 3, sweeeeeet, reading.temp, reading.rHum);
+      sprintf(messageHolder, "Tick: %u | %d %d %d %x %d %d \n", count, 1, 2, 3, 4, reading.temp, reading.rHum);
       uartPrintString(messageHolder, 64);
       count++;
     }
