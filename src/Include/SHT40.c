@@ -27,9 +27,7 @@ uint16_t SHT_getSerialNumber(void)
     return serNum;
 }
 
-#define MULT 10
-
-int16_t SHT_getMedReading(void)
+SHT_RESULT_S SHT_getMedReading(void)
 {
     uint8_t rxData[6];
     SHT_sendCommand(TRH_MID);
@@ -37,9 +35,27 @@ int16_t SHT_getMedReading(void)
     I2C_read(SHT40_ADDR, rxData, 6);
     
     uint16_t tempMeas = (rxData[0] << 8) | rxData[1];
-    int16_t result = (int16_t)tempMeas * (175*MULT);
-    result /= 65535;
-    result -= (45*MULT);
+    long tempResult = (long)tempMeas * (175 * T_MULT);
+    tempResult /= 65535;
+    tempResult -= (45 * T_MULT);
+
+    uint16_t humMeas = (rxData[3] << 8) | rxData[4];
+    long humResult = (long)humMeas * (125 * H_MULT);
+    humResult /= 65535;
+    humResult -= (6*H_MULT);
+    if(humResult < 0)
+    {
+        humResult = 0;
+    }
+    if(humResult > (100*H_MULT))
+    {
+        humResult = (100*H_MULT);
+    }
+
+    SHT_RESULT_S result;
+    result.temp = (int16_t)tempResult;
+    result.rHum = (uint8_t)humResult;
+    
     return result;
 }
 

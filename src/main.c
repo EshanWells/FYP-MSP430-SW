@@ -44,10 +44,11 @@ int main(void)
       LED_TGLE;
 
       uint16_t sweeeeeet = SHT_getSerialNumber();
-      int16_t temps16 = SHT_getMedReading();
+      SHT_RESULT_S reading;
+      reading = SHT_getMedReading();
 
       char messageHolder[64] = {0};
-      sprintf(messageHolder, "Tick: %u | %d %d %d %d %d %d \n", count, 1, 2, 3, sweeeeeet, temps16, 6);
+      sprintf(messageHolder, "Tick: %u | %d %d %d %x %d %d \n", count, 1, 2, 3, sweeeeeet, reading.temp, reading.rHum);
       uartPrintString(messageHolder, 64);
       count++;
     }

@@ -16,6 +16,9 @@
 
 #define SHT40_ADDR 0x44
 
+#define T_MULT 10
+#define H_MULT 2 //unit of 0.5% ticks?
+
 typedef enum
 {
     TRH_HIGH = 0xFD,
@@ -31,10 +34,16 @@ typedef enum
     H020_0_1 = 0x15
 } SHT_COMMAND_E;
 
+typedef struct 
+{
+    int16_t temp;
+    uint8_t rHum;
+}SHT_RESULT_S;
+
 void SHT_sendCommand(SHT_COMMAND_E command);
 
 uint16_t SHT_getSerialNumber(void);
 
-int16_t SHT_getMedReading(void);
+SHT_RESULT_S SHT_getMedReading(void);
 
 #endif

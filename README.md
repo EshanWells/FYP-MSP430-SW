@@ -11,7 +11,7 @@ In a very loose order
  - [x] UART Driver
  - [X] Fix GPIO.c and .h
  - [X] Implement I2C Drivers
- - [ ] SHT40 Driver
+ - [X] SHT40 Driver
  - [ ] RTC Driver
  - [X] EEPROM Driver
  - [ ] SLL Alg
