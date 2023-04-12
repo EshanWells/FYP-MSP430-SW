@@ -29,5 +29,6 @@
 #include "I2C.h"
 #include "EE.h"
 #include "SHT40.h"
+#include "RTC.h"
 
 #endif /* SRC_INCLUDE_CORE_H_ */
