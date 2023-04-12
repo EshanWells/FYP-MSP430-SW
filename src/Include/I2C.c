@@ -151,10 +151,17 @@ void I2C_write(uint8_t slaveAddr, uint8_t *txData, uint8_t dataLength)
     I2C_txInit(slaveAddr);
     I2C_setStart();
     uint8_t index;
+    uint8_t data;
+
+    pTxData = (uint8_t *) txData; //pointer to start of data.
+
     for(index = 0; index < dataLength; index++)
     {
-        I2C_transmit(txData[index]);
+        //I2C_transmit(txData[index]); //Old technique
+        data = *(pTxData + index);
+        I2C_transmit(data);
     }
+    
     I2C_setStop();
     while(I2C_isStop());
 }
@@ -165,9 +172,15 @@ void I2C_read(uint8_t slaveAddr, uint8_t *rxData, uint8_t dataLength)
     I2C_rxInit(slaveAddr);
     I2C_setStart();
     uint8_t index;
+    uint8_t data;
+
+    pRxData = (uint8_t *) rxData;
+
     for(index = 0; index < dataLength; index++)
     {
-        rxData[index] = I2C_receive();
+        //rxData[index] = I2C_receive(); Old
+        data = I2C_receive();
+        *(pRxData + index) = data;
     }
     I2C_setStop();
     while(I2C_isStop());
