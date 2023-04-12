@@ -43,18 +43,18 @@ int main(void)
       static uint16_t count = 0;
       LED_TGLE;
 
-      //uint16_t sweeeeeet = SHT_getSerialNumber();
+      uint16_t sweeeeeet = SHT_getSerialNumber();
       SHT_RESULT_S reading;
-      reading.temp = 690;
-      reading.rHum = 42;
-      //reading = SHT_getMedReading();
+      //reading.temp = 690;
+      //reading.rHum = 42;
+      reading = SHT_getMedReading();
 
-      uint8_t txData[1] = {0x00};
-      uint8_t rxData[1] = {0};
-      I2C_write(MCP7940_ADDR, txData, 1);
+      //uint8_t txData[2] = {0x00, 0xFF};
+      //uint8_t rxData[1] = {0};
+      //I2C_write(MCP7940_ADDR, txData, 1);
 
       char messageHolder[64] = {0};
-      sprintf(messageHolder, "Tick: %u | %d %d %d %x %d %d \n", count, 1, 2, 3, 4, reading.temp, reading.rHum);
+      sprintf(messageHolder, "Tick: %u | %d %d %d %x %d %d \n", count, sweeeeeet, 2, 3, 4, reading.temp, reading.rHum);
       uartPrintString(messageHolder, 64);
       count++;
     }
