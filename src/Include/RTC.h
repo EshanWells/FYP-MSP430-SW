@@ -41,7 +41,7 @@ typedef struct
     uint8_t min;
     uint8_t hour;
     uint8_t wkday;
-    uint8_t date;
+    uint8_t day;
     uint8_t mth;
     uint8_t year;
 } __attribute__((packed)) RTC_DT_REGS_S;
@@ -54,4 +54,3 @@ typedef struct
 
 
 #endif
-

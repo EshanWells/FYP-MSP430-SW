@@ -35,6 +35,17 @@ int main(void)
   char startMessage[] = "\nContainer Logger Software Init Complete\n";
   uartPrintString(startMessage, strlen(startMessage));
 
+      RTC_REG_IF_S dateSet;
+      dateSet.address = 0x00;
+      dateSet.date.sec = 0x80;
+      dateSet.date.min = 0x00;
+      dateSet.date.hour = 0x00;
+      dateSet.date.wkday = 0x05;
+      dateSet.date.day = 0x01;
+      dateSet.date.mth = 0x01;
+      dateSet.date.year = 0x70;
+      
+      I2C_write(MCP7940_ADDR, (uint8_t *)&dateSet, 8);
 
   while (1)
   {
@@ -49,12 +60,15 @@ int main(void)
       //reading.rHum = 42;
       reading = SHT_getMedReading();
 
-      //uint8_t txData[2] = {0x00, 0xFF};
-      //uint8_t rxData[1] = {0};
-      //I2C_write(MCP7940_ADDR, txData, 1);
+      RTC_REG_IF_S current;
+
+      uint8_t txData[1] = {0x00};
+
+      I2C_write(MCP7940_ADDR, txData, 1);
+      I2C_read(MCP7940_ADDR, (uint8_t *)&current, 7);
 
       char messageHolder[64] = {0};
-      sprintf(messageHolder, "Tick: %u | %d %d %d %x %d %d \n", count, sweeeeeet, 2, 3, 4, reading.temp, reading.rHum);
+      sprintf(messageHolder, "Tick: %u | %d %d %d DateTime: %d:%d:%d \n", count, sweeeeeet, reading.temp, reading.rHum, current.date.hour, current.date.min, current.date.sec);
       uartPrintString(messageHolder, 64);
       count++;
     }
