@@ -40,7 +40,7 @@ int main(void)
       dateSet.date.sec = 0x80;
       dateSet.date.min = 0x00;
       dateSet.date.hour = 0x00;
-      dateSet.date.wkday = 0x05;
+      dateSet.date.wkday = SUNDAY;
       dateSet.date.day = 0x01;
       dateSet.date.mth = 0x01;
       dateSet.date.year = 0x70;

@@ -16,6 +16,17 @@
 
 #define MCP7940_ADDR 0x6F
 
+typedef enum
+{
+    SUNDAY = 1,
+    MONDAY,
+    TUESDAY,
+    WEDNESDAY,
+    THURSDAY,
+    FRIDAY,
+    SATURDAY,
+} DOW_E;
+
 typedef enum 
 {
     RTCSEC = 0x00,
@@ -40,7 +51,7 @@ typedef struct
     uint8_t sec;
     uint8_t min;
     uint8_t hour;
-    uint8_t wkday;
+    DOW_E wkday;
     uint8_t day;
     uint8_t mth;
     uint8_t year;
@@ -51,6 +62,5 @@ typedef struct
     uint8_t address;
     RTC_DT_REGS_S date;
 } __attribute__((packed)) RTC_REG_IF_S;
-
 
 #endif
