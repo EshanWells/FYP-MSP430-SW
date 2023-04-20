@@ -25,7 +25,7 @@ int main(void)
 {
   sysInit();
 
-  timer0Counter0(16384, 1);
+  timer0Counter0(6000, 1);
 
   __bis_SR_register(GIE);
 

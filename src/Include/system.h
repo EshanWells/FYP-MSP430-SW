@@ -61,6 +61,12 @@ void initDCOClock(enum DCO_FREQ dcoFreq);
 void initLFXT1(void);
 
 /**
+ * @brief 
+ * 
+ */
+void initVLOClock(void);
+
+/**
  * @brief set source and divider for MCLK
  *
  * @param src

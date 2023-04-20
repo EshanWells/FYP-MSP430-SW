@@ -28,7 +28,8 @@ void sysInit(void)
 
     // Initialize clocks
     initDCOClock(DCO_1MHz);
-    initLFXT1();
+    //initLFXT1();
+    initVLOClock();
 
     initMCLK(MCLK_DCO, DIV_1);
     initSMCLK(SMCLK_DCO, DIV_1);
@@ -72,12 +73,19 @@ void initDCOClock(enum DCO_FREQ dcoFreq)
 void initLFXT1(void)
 {
     BCSCTL3 = 0x00;
-    BCSCTL3 |= XCAP_3; //set caps to 12.5pF
-    while (BCSCTL3 & BIT1)
+    //BCSCTL3 |= XCAP_3; //set caps to 12.5pF
+    while (BCSCTL3 & BIT0)
     {
         _NOP(); //wait for LFXT to stabilise.
     }
 
+}
+
+void initVLOClock(void)
+{
+    BCSCTL3 = 0x00;
+    BCSCTL3 |= 0b00100000;
+    __delay_cycles(5000);
 }
 
 void initMCLK(enum MCLK_SEL src, enum DIV_SEL div)
