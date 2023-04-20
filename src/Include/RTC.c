@@ -11,8 +11,13 @@
 
 #include "RTC.h"
 
-//!YOOOO IM HAVING ISSUES PASSING A STRUCT THROUGH TO my I2C FUNCTIONS.
-//! I MAY WANNA MAKE NEW FUNCTIONS WITH POINTER MAGIC OR SOMETHING?
-//! COPY JOHN'S IIC CODE? THAT SEEMED TO HANDLE IT WELL
-//! OR AS AN INTERMEDIATE STEP JUST TURN THE STRUCT INTO AN ARRAY. BUT I DON'T LIKE THAT :(
-//! ANYWAY GET THIS SORTED I'M ON A ROLL HERE.
+void RTC_BCDTODEC(RTC_DT_REGS_S *src, RTC_DT_REGS_S *dst)
+{
+    dst->sec   = (src->sec & 0x0f) + (10* ((src->sec>>4) & 0x07));
+    dst->min   = (src->min & 0x0f) + (10* ((src->min>>4) & 0x07));
+    dst->hour  = (src->hour & 0x0f) + (10* ((src->hour>>4) & 0x07));
+    dst->wkday = src->wkday & 0x07;
+    dst->day   = (src->day & 0x0f) + (10* ((src->day>>4) & 0x0f));
+    dst->mth   = (src->mth & 0x0f) + (10* ((src->mth>>4) & 0x01));
+    dst->year  = (src->year & 0x0f) + (10* ((src->year>>4) & 0x0f));
+}

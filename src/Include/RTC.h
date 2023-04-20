@@ -46,7 +46,7 @@ typedef enum
     ALM0MTH,
 } RTC_REGS_E;
 
-typedef struct 
+typedef struct  
 {
     uint8_t sec;
     uint8_t min;
@@ -62,5 +62,9 @@ typedef struct
     uint8_t address;
     RTC_DT_REGS_S date;
 } __attribute__((packed)) RTC_REG_IF_S;
+
+void RTC_BCDTODEC(RTC_DT_REGS_S *src, RTC_DT_REGS_S *dst);
+
+void RTC_DECTOBCD(RTC_DT_REGS_S *src, RTC_DT_REGS_S *dst);
 
 #endif
