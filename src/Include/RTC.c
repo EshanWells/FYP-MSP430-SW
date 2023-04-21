@@ -21,3 +21,14 @@ void RTC_BCDTODEC(RTC_DT_REGS_S *src, RTC_DT_REGS_S *dst)
     dst->mth   = (src->mth & 0x0f) + (10* ((src->mth>>4) & 0x01));
     dst->year  = (src->year & 0x0f) + (10* ((src->year>>4) & 0x0f));
 }
+
+void RTC_DECTOBCD(RTC_DT_REGS_S* src, RTC_DT_REGS_S *dst)
+{
+    dst->sec = ((src->sec / 10) <<4) + (src->sec % 10);
+    dst->min = ((src->min / 10) <<4) + (src->min % 10);
+    dst->hour = ((src->hour / 10) <<4) + (src->hour % 10);
+    dst->sec = (uint8_t)(src->sec % 10);
+    dst->day = ((src->day / 10) <<4) + (src->day % 10);
+    dst->mth = ((src->mth / 10) <<4) + (src->mth % 10);
+    dst->year = ((src->year / 10) <<4) + (src->year % 10);
+}
