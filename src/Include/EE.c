@@ -42,3 +42,40 @@ void EE_write(uint16_t memAddr, uint8_t *pData, uint8_t length) //We are limited
     I2C_write(EE_I2C_ADDR, toWrite, lenToWrite);
 
 }
+
+void EE_ReadbackRaw(void)
+{
+    uint8_t data[16] = {0};
+    uint16_t addressPointer = 0;
+    uint16_t entryIndex = 0;
+
+    for(entryIndex = 0; entryIndex < 4096; entryIndex++)
+    {
+        addressPointer = entryIndex<<4; //multiply by 16
+
+        EE_read(addressPointer, data, 16);
+
+        char entryPrint[64] = {0};
+        sprintf(entryPrint, "%u - %X %X %X %X %X %X %X %X %X %X %X %X %X %X %X %X\n",
+        entryIndex,
+        data[0],
+        data[1],
+        data[2],
+        data[3],
+        data[4],
+        data[5],
+        data[6],
+        data[7],
+        data[8],
+        data[9],
+        data[10],
+        data[11],
+        data[12],
+        data[13],
+        data[14],
+        data[15]
+        );
+
+        uartPrintString(entryPrint, 64);
+    }
+}

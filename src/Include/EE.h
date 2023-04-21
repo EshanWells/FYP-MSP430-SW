@@ -33,4 +33,6 @@ void EE_read(uint16_t memAddr, uint8_t *pData, uint8_t length);
  */
 void EE_write(uint16_t memAddr, uint8_t *pData, uint8_t length);
 
+void EE_ReadbackRaw(void);
+
 #endif

@@ -34,6 +34,7 @@
 typedef enum
 {
     STARTUP = 0,
+    MENU,
     MCP_READ,
     SHT_START,
     SHT_READ,
@@ -41,6 +42,7 @@ typedef enum
     EE_READ,
     MCP_WRITEALARM,
     SLEEP,
+    LOG_READBACK_RAW,
     GENERAL_ERROR,
     EE_ERROR,
     I2C_ERROR,
