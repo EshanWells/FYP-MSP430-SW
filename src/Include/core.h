@@ -31,4 +31,32 @@
 #include "SHT40.h"
 #include "RTC.h"
 
+typedef enum
+{
+    STARTUP = 0,
+    MCP_READ,
+    SHT_START,
+    SHT_READ,
+    EE_WRITE,
+    EE_READ,
+    MCP_WRITEALARM,
+    SLEEP,
+    GENERAL_ERROR,
+    EE_ERROR,
+    I2C_ERROR,
+    RESET,
+}LOG_FSM;
+
+extern LOG_FSM logState;
+
+extern LOG_FSM nextLogState;
+
+void setLOGState(LOG_FSM set);
+
+LOG_FSM getLOGState(void);
+
+void setNextLOGState(LOG_FSM set);
+
+LOG_FSM getNextLOGState(void);
+
 #endif /* SRC_INCLUDE_CORE_H_ */

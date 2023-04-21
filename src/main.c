@@ -72,5 +72,82 @@ int main(void)
       uartPrintString(messageHolder, 64);
       count++;
     }
+
+    //* Main State Machine
+
+    //! I need to set up Timer B as my delay timer for this to work. 
+    //! Short term, Timer A can be the RTC 'Alarm' line which is fine realy.
+    //? I need to figure out if I'm clearing LPM bits in the timer and setting manually in FSM
+    //? or if I'll extensively use 'sleep' mode between modules?
+
+    switch (logState)
+    {
+    case STARTUP:
+      //non core boot code?
+      //probably check for an EE reset condition?
+      break;
+
+    case MCP_READ:
+      //get current date time from MCP.
+      //set next state
+      //short term the tick count will suffice.
+      break;
+
+    case SHT_START:
+      //send code to start a reading from SHT sensor
+      //set next state
+      //sleep for the time required.
+      break;
+
+    case SHT_READ:
+      //get the data from SHT
+      //process that data
+      //set next state
+      break;
+
+    case EE_WRITE:
+      //final format data for EE, including a struct
+      //write data to EE
+      //set next state
+      //sleep for an appropriate time
+      break;
+
+    case EE_READ:
+      //read back EE data from last address written
+      //check it matches what we just sent
+      //if it does, move onto next state
+      //if not, we got an error
+      break;
+
+    case MCP_WRITEALARM:
+      //set alarm for RTC
+      break;
+
+    case SLEEP:
+      //Set up sleep mode
+      break;
+
+    case GENERAL_ERROR:
+      while(1);
+      break;
+
+    case EE_ERROR:
+      while(1);
+      break;
+
+    case I2C_ERROR:
+      while(1);
+      break;
+    
+    case RESET:
+      //EE clearing code?
+      break;
+
+    default:
+      while(1);
+      break;
+    }
+
+    //LPM3;
   }
 }
