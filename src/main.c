@@ -20,6 +20,11 @@
 
 #define EE_ADDR 0x50
 
+uint16_t errorCountGeneral = 0;
+uint16_t errorCountEE = 0;
+uint16_t errorCountI2C = 0;
+
+//!Implement Debug Channel, potentially through UART
 
 int main(void)
 {
@@ -117,6 +122,8 @@ int main(void)
       //check it matches what we just sent
       //if it does, move onto next state
       //if not, we got an error
+
+      //consider goiong back to write for a few turns.
       break;
 
     case MCP_WRITEALARM:
@@ -127,8 +134,13 @@ int main(void)
       //Set up sleep mode
       break;
 
+
+//! in these error sections, somehow display an error then transition to a known state
+//! Implement watchdog timer
+
+
     case GENERAL_ERROR:
-      while(1);
+      while(1); //implement error counter?
       break;
 
     case EE_ERROR:
@@ -144,7 +156,7 @@ int main(void)
       break;
 
     default:
-      while(1);
+      while(1); //error counter then fire back to start
       break;
     }
 
