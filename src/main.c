@@ -54,6 +54,8 @@ int main(void)
 
   I2C_write(MCP7940_ADDR, (uint8_t *)&dateSet, 8);
 
+  EE_ReadbackRaw();
+
   while (1)
   {
     if (doTickRoutine())
