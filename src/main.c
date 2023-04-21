@@ -20,12 +20,12 @@
 
 #define EE_ADDR 0x50
 
-uint16_t errorCountGeneral = 0;
-uint16_t errorCountEE = 0;
-uint16_t errorCountI2C = 0;
+volatile uint16_t errorCountGeneral = 0;
+volatile uint16_t errorCountEE = 0;
+volatile uint16_t errorCountI2C = 0;
 
-LOG_FSM logState = STARTUP;
-LOG_FSM nextLogState;
+volatile LOG_FSM logState = STARTUP;
+volatile LOG_FSM nextLogState;
 
 //! Implement Debug Channel, potentially through UART
 
@@ -152,13 +152,11 @@ int main(void)
       //! Implement watchdog timer
 
     case GENERAL_ERROR:
-      while (1)
-        ; // implement error counter?
+      while (1); // implement error counter?
       break;
 
     case EE_ERROR:
-      while (1)
-        ;
+      while (1);
       break;
 
     case I2C_ERROR:

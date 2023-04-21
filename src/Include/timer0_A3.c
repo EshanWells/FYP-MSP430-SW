@@ -62,7 +62,7 @@ uint8_t doTickRoutine(void)
 /*****************************************/
 
 #pragma vector = TIMER0_A0_VECTOR
-__interrupt void Timer_A0_CCR0_ISR(void)
+__interrupt void Timer0_A0_CCR0_ISR(void) //this may not work
 {
     TA0CCTL0 &= ~CCIFG;
     T0A3IFG1 = 1;

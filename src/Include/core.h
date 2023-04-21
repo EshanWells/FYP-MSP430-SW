@@ -25,6 +25,7 @@
 #include "system.h"
 #include "gpio.h"
 #include "timer0_A3.h"
+#include "timer1_A3.h"
 #include "uart.h"
 #include "I2C.h"
 #include "EE.h"
