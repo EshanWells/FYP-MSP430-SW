@@ -50,9 +50,9 @@ typedef enum
     RESET,
 }LOG_FSM;
 
-extern LOG_FSM logState;
+extern volatile LOG_FSM logState;
 
-extern LOG_FSM nextLogState;
+extern volatile LOG_FSM nextLogState;
 
 void setLOGState(LOG_FSM set);
 

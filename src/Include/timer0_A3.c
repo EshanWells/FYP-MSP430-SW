@@ -13,9 +13,8 @@
 
 #include "core.h"
 
-void timer0Counter0(uint16_t delay, uint8_t code)
+void timer0Counter0(uint16_t delay)
 {
-    setTimer0Code0(code); //experiment to see if we can pass some data through this.
     // set up Timer0_A3
     TA0CCR0 = delay;      // set compare register to desired delay
     TA0CTL = TASSEL_1 + ID_0; // use ACLK as source, div 8

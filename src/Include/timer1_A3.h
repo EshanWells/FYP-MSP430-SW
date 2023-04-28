@@ -15,10 +15,10 @@
 #include "core.h"
 
 /**
- * @brief Timer that switches the next state
- * 
- * @param delay in incremements of 0.6ms
+ * @brief
+ *
+ * @param delay expressed as multiples of ???
  */
-void stateSwitchTimer(uint16_t delay);
+void timer1Counter0(uint16_t delay);
 
 #endif

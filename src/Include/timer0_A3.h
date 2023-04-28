@@ -17,7 +17,7 @@
 /**
  * @brief
  *
- * @param delay expressed as multiples of 8 us
+ * @param delay expressed as multiples of ???
  */
 void timer0Counter0(uint16_t delay, uint8_t code);
 
