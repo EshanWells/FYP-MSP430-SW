@@ -15,6 +15,12 @@
 #include "core.h"
 
 /**
+ * @brief stop timer
+ *
+ */
+void stopTimer(void);
+
+/**
  * @brief
  *
  * @param delay expressed as multiples of ???

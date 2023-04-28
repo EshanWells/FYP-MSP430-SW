@@ -12,6 +12,11 @@
 #include "timer1_A3.h"
 #include "core.h"
 
+void stopTimer(void)
+{
+    TA1CTL &= ~MC_1;
+}
+
 void timer1Counter0(uint16_t delay)
 {
  // Stop timer
