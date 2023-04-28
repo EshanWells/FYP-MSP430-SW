@@ -19,7 +19,7 @@
  *
  * @param delay expressed as multiples of ???
  */
-void timer0Counter0(uint16_t delay, uint8_t code);
+void timer0Counter0(uint16_t delay);
 
 /**
  * @brief start timer
@@ -31,7 +31,7 @@ void startTimer(void);
  * @brief stop timer
  *
  */
-void stopTimer(void);
+void stopTimer0(void);
 
 /**
  * @brief toggle P1.0

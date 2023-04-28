@@ -32,7 +32,7 @@ void startTimer(void)
     TA0CTL |= MC_1;
 }
 
-void stopTimer(void)
+void stopTimer0(void)
 {
     TA0CTL &= ~MC_1;
 }

@@ -11,22 +11,22 @@
 
 #include "core.h"
 
-void setLOGState(LOG_FSM set)
+void setLogState(LOG_FSM set)
 {
     logState = set;
 }
 
-LOG_FSM getLOGState(void)
+LOG_FSM getLogState(void)
 {
     return logState;
 }
 
-void setNextLOGState(LOG_FSM set)
+void setNextLogState(LOG_FSM set)
 {
     nextLogState = set;
 }
 
-LOG_FSM getNextLOGState(void)
+LOG_FSM getNextLogState(void)
 {
     return nextLogState;
 }

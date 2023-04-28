@@ -54,12 +54,12 @@ extern volatile LOG_FSM logState;
 
 extern volatile LOG_FSM nextLogState;
 
-void setLOGState(LOG_FSM set);
+void setLogState(LOG_FSM set);
 
-LOG_FSM getLOGState(void);
+LOG_FSM getLogState(void);
 
-void setNextLOGState(LOG_FSM set);
+void setNextLogState(LOG_FSM set);
 
-LOG_FSM getNextLOGState(void);
+LOG_FSM getNextLogState(void);
 
 #endif /* SRC_INCLUDE_CORE_H_ */

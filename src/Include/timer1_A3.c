@@ -12,7 +12,7 @@
 #include "timer1_A3.h"
 #include "core.h"
 
-void stopTimer(void)
+inline void stopTimer1(void)
 {
     TA1CTL &= ~MC_1;
 }
@@ -42,7 +42,8 @@ void timer1Counter0(uint16_t delay)
 __interrupt void Timer1_A0_CCR0_ISR(void) //this may not work
 {
     TA1CCTL0 &= ~CCIFG;
-    LED_TGLE;
-    timer1Counter0(24000);
+    stopTimer1();
+    setLogState(getNextLogState());
+    __bic_SR_register_on_exit(LPM3_bits);
 }
 

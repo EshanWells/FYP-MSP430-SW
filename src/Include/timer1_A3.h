@@ -18,7 +18,7 @@
  * @brief stop timer
  *
  */
-void stopTimer(void);
+inline void stopTimer1(void);
 
 /**
  * @brief

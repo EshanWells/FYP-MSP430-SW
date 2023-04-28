@@ -32,17 +32,7 @@ volatile LOG_FSM nextLogState;
 int main(void)
 {
   sysInit();
-
-  timer0Counter0(6000, 1);
-
   __bis_SR_register(GIE);
-
-  I2C_setSlaveAddr(0b01010000);
-
-  char startMessage[] = "\nContainer Logger Software Init Complete\n";
-  uartPrintString(startMessage, strlen(startMessage));
-
-  timer1Counter0(24000);
 
 /*
   RTC_REG_IF_S dateSet;
@@ -59,62 +49,88 @@ int main(void)
 
   while (1)
   {
-    /*if (doTickRoutine())
-    {
-      static uint16_t count = 0;
-      LED_TGLE;
-
-      uint16_t sweeeeeet = SHT_getSerialNumber();
-      SHT_RESULT_S reading;
-      reading = SHT_getMedReading();
-
-      //RTC_REG_IF_S current;
-
-      //uint8_t txData[1] = {0x00};
-
-      //I2C_write(MCP7940_ADDR, txData, 1);
-      //I2C_read(MCP7940_ADDR, (uint8_t *)&current, 7);
-
-      char messageHolder[64] = {0};
-      sprintf(messageHolder, "Tick: %u | %d %d %d DateTime: %d:%d:%d \n", count, sweeeeeet, reading.temp, reading.rHum, current.date.hour, current.date.min, current.date.sec);
-      uartPrintString(messageHolder, 64);
-      count++;
-    }*/
-
     //* Main State Machine
-
-    //! I need to set up Timer B as my delay timer for this to work.
-    //! Short term, Timer A can be the RTC 'Alarm' line which is fine realy.
-    //? I need to figure out if I'm clearing LPM bits in the timer and setting manually in FSM
-    //? or if I'll extensively use 'sleep' mode between modules?
+    static uint16_t tickCount = 0;
+    static SHT_RESULT_S tempHumReading;
 
     switch (logState)
     {
     case STARTUP:
       // non core boot code?
       // probably check for an EE reset condition?
+      {
+      char startMessage[] = "\nContainer Logger Software Init Complete\n";
+      uartPrintString(startMessage, strlen(startMessage));
+
+      setLogState(SLEEP);
+      setNextLogState(SHT_START);
+      timer1Counter0(4000);
+      }
       break;
 
     case MENU:
       // maybe present some options? Log, Readback, etc.
+      {
+
+      }
       break;
 
     case MCP_READ:
       // get current date time from MCP.
       // set next state
       // short term the tick count will suffice.
+
       break;
 
+//*START TEMP & HUM MEASUREMENT
     case SHT_START:
       // send code to start a reading from SHT sensor
       // set next state
       // sleep for the time required.
+      {
+        SHT_sendCommand(TRH_MID);
+      }
+      setLogState(SLEEP);
+      setNextLogState(SHT_READ);
+      timer1Counter0(100);//actual delay is 60 vlo cycles, this is error margin.
       break;
 
+//*READ TEMP & HUM DATA
     case SHT_READ:
       // get the data from SHT
       // process that data
       // set next state
+      {
+        uint8_t rxData[6];
+        I2C_read(SHT40_ADDR, rxData, 6);
+        uint16_t tempMeas = (rxData[0] << 8) | rxData[1];
+        long tempResult = (long)tempMeas * (175 * T_MULT);
+        tempResult /= 65535;
+        tempResult -= (45 * T_MULT);
+
+        uint16_t humMeas = (rxData[3] << 8) | rxData[4];
+        long humResult = (long)humMeas * (125 * H_MULT);
+        humResult /= 65535;
+        humResult -= (6*H_MULT);
+        if(humResult < 0)
+        {
+            humResult = 0;
+        }
+        if(humResult > (100*H_MULT))
+        {
+            humResult = (100*H_MULT);
+        }
+
+        tempHumReading.temp = (int16_t)tempResult;
+        tempHumReading.rHum = (uint8_t)humResult;
+
+        char messageHolder[32] = {0};
+        sprintf(messageHolder, "Temp: %d | RH: %d\n", tempHumReading.temp, tempHumReading.rHum);
+        uartPrintString(messageHolder, 32);
+      }
+      setLogState(SLEEP);
+      setNextLogState(SHT_START);
+      timer1Counter0(65535);
       break;
 
     case EE_WRITE:
@@ -139,6 +155,7 @@ int main(void)
 
     case SLEEP:
       // Set up sleep mode
+      LPM3;
       break;
 
     case LOG_READBACK_RAW:
@@ -173,6 +190,27 @@ int main(void)
       break;
     }
 
-    // LPM3;
+
+    /*if (doTickRoutine())
+    {
+      static uint16_t count = 0;
+      LED_TGLE;
+
+      uint16_t sweeeeeet = SHT_getSerialNumber();
+      SHT_RESULT_S reading;
+      reading = SHT_getMedReading();
+
+      //RTC_REG_IF_S current;
+
+      //uint8_t txData[1] = {0x00};
+
+      //I2C_write(MCP7940_ADDR, txData, 1);
+      //I2C_read(MCP7940_ADDR, (uint8_t *)&current, 7);
+
+      char messageHolder[64] = {0};
+      sprintf(messageHolder, "Tick: %u | %d %d %d DateTime: %d:%d:%d \n", count, sweeeeeet, reading.temp, reading.rHum, current.date.hour, current.date.min, current.date.sec);
+      uartPrintString(messageHolder, 64);
+      count++;
+    }*/
   }
 }
