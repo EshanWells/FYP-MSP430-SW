@@ -21,8 +21,5 @@ void initGPIO(void)
     P2DIR |= BIT2 + BIT3 + BIT4 + BIT6 + BIT7;
     P2DIR &= ~BIT0 + ~BIT1 + ~BIT5;
     P2REN |= BIT6 + BIT7;
-
-    P3DIR = 0xFF;
-    P3REN = 0xFF;
-    P3OUT = 0x00;
+    P1OUT &= ~BIT6 + BIT7;
 }

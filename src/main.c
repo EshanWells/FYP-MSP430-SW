@@ -50,7 +50,7 @@ int main(void)
   while (1)
   {
     //* Main State Machine
-    static uint16_t tickCount = 0;
+    static unsigned long tickCount = 0;
     static SHT_RESULT_S tempHumReading;
 
     switch (logState)
@@ -71,12 +71,18 @@ int main(void)
     case MENU:
       // maybe present some options? Log, Readback, etc.
       {
-        char messageHolder[64] = "\r\nContainer Logger Main Menu\r\n";
-        uartPrintString(messageHolder, 64);
+        char messageHolder[40] = "\r\nContainer Logger Main Menu\r\n";
+        uartPrintString(messageHolder, 40);
         strncpy(messageHolder, "   Num    Option\r\n  ----- ----------\r\n", 64);
-        uartPrintString(messageHolder, 64);
-        strncpy(messageHolder, "    1    Logging\r\n    2    Readback\r\n    3    EE Nuke\r\n\r\n", 64);
-        uartPrintString(messageHolder, 64);
+        uartPrintString(messageHolder, 40);
+        strncpy(messageHolder, "    1    Logging\r\n", 64);
+        uartPrintString(messageHolder, 40);
+        strncpy(messageHolder, "    2    Readback\r\n", 64);
+        uartPrintString(messageHolder, 40);
+        strncpy(messageHolder, "    3    EE Nuke\r\n", 64);
+        uartPrintString(messageHolder, 40);
+        //strncpy(messageHolder, "    4    Enter Time\r\n\r\n", 64);
+        //uartPrintString(messageHolder, 40);
       }
       setLogState(SLEEP);
       setNextLogState(MENU);
@@ -176,14 +182,14 @@ int main(void)
 
     case EE_RESET:
       {
-        data[32] = {0xFF}; //!Need to test the heck outta this bad boy
+        uint8_t data[32] = {0xFF}; //!Need to test the heck outta this bad boy
         uint8_t index;
         for(index = 0; index < 128; index++)
         {
           uint16_t address = index<<5;
           EE_write(address, data, 32);
         } 
-        char message[24] = "\r\nEE Wiped\r\n"
+        char message[24] = "\r\nEE Wiped\r\n";
         uartPrintString(message, 24);
       }
       break;
