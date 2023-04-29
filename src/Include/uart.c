@@ -41,7 +41,9 @@ void uartPrintString(char* str, uint8_t size)
 #pragma vector=USCIAB0RX_VECTOR
 __interrupt void UART_RX_ISR(void)
 {    
-    if((getLogState() == SLEEP) && (getNextLogState() == MENU))
+    static volatile uint8_t nukeWait = 0;
+    
+    if((getLogState() == SLEEP) && (getNextLogState() == MENU) && (nukeWait == 0))
     {       
         switch (UCA0RXBUF)
         {
@@ -61,6 +63,11 @@ __interrupt void UART_RX_ISR(void)
         
         case 0x33:
             //implement some sort of 'are you sure?' here honestly.
+            {
+                nukeWait = 1;
+                char message[24] = "\r\nAre you sure? y/N\r\n";
+                uartPrintString(message,24);
+            }
             break;
 
         default:
@@ -69,11 +76,25 @@ __interrupt void UART_RX_ISR(void)
         }
 
         _bic_SR_register_on_exit(LPM3_bits);
-    } else if (UCA0RXBUF == 0x6D) {
+    } 
+    else if (UCA0RXBUF == 0x6D) //Stops execution of current mode and prints menu.
+    {
         setLogState(MENU);
         setNextLogState(MENU);
         _bic_SR_register_on_exit(LPM3_bits);
-    } else {
+    } 
+    else if (nukeWait == 1)
+    {
+        nukeWait = 0;
+        if(UCA0RXBUF == 0x79)
+        {
+            setLogState(EE_RESET);
+        } else {
+            setLogState(MENU);
+        }
+    }
+    else //echo character if it's not a command. This could be disabled later.
+    {
         while (!(IFG2 & UCA0TXIFG)); // USCI_A0 TX buffer ready?
         UCA0TXBUF = UCA0RXBUF; // TX -> RXed character
     }
