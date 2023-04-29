@@ -40,16 +40,23 @@ void uartPrintString(char* str, uint8_t size)
 
 #pragma vector=USCIAB0RX_VECTOR
 __interrupt void UART_RX_ISR(void)
-{
-    while (!(IFG2 & UCA0TXIFG)); // USCI_A0 TX buffer ready?
-    UCA0TXBUF = UCA0RXBUF; // TX -> RXed character
-    
-    /*if(MENU == getLogState() && MENU == getNextLogState)
-    {
+{    
+    if((getLogState() == SLEEP) && (getNextLogState() == MENU))
+    {       
         switch (UCA0RXBUF)
         {
-        case '1':
-            setLogState(SHT_START);
+        case 0x31: //1
+            {
+                setLogState(SHT_START);
+                char message[24] = "\r\nLogger Start\r\n";
+                uartPrintString(message, 24);
+            }
+            break;
+
+        case 0x32:
+            {
+                setLogState(LOG_READBACK_RAW);
+            }
             break;
         
         default:
@@ -57,6 +64,13 @@ __interrupt void UART_RX_ISR(void)
             break;
         }
 
-        _bic_SR_register_on_exit(LPM0_bits);
-    }*/
+        _bic_SR_register_on_exit(LPM3_bits);
+    } else if (UCA0RXBUF == 0x6D) {
+        setLogState(MENU);
+        setNextLogState(MENU);
+        _bic_SR_register_on_exit(LPM3_bits);
+    } else {
+        while (!(IFG2 & UCA0TXIFG)); // USCI_A0 TX buffer ready?
+        UCA0TXBUF = UCA0RXBUF; // TX -> RXed character
+    }
 }

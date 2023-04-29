@@ -56,7 +56,7 @@ void EE_ReadbackRaw(void)
         EE_read(addressPointer, data, 16);
 
         char entryPrint[64] = {0};
-        sprintf(entryPrint, "%u - %X %X %X %X %X %X %X %X %X %X %X %X %X %X %X %X\n",
+        sprintf(entryPrint, "%.4u - %.2X %.2X %.2X %.2X %.2X %.2X %.2X %.2X %.2X %.2X %.2X %.2X %.2X %.2X %.2X %.2X\r\n",
         entryIndex,
         data[0],
         data[1],
@@ -77,5 +77,10 @@ void EE_ReadbackRaw(void)
         );
 
         uartPrintString(entryPrint, 64);
+        
+        if(getLogState() == MENU) //this situation indicates a cancel is requested.
+        {
+            break;
+        }
     }
 }

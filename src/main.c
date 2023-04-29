@@ -59,7 +59,7 @@ int main(void)
       // non core boot code?
       // probably check for an EE reset condition?
       {
-      char startMessage[] = "\nContainer Logger Software Init Complete\n";
+      char startMessage[] = "\r\nContainer Logger Software Init Complete\r\n";
       uartPrintString(startMessage, strlen(startMessage));
 
       setLogState(SLEEP);
@@ -71,14 +71,15 @@ int main(void)
     case MENU:
       // maybe present some options? Log, Readback, etc.
       {
-        char messageHolder[64] = "Container Logger Main Menu\n";
+        char messageHolder[64] = "\r\nContainer Logger Main Menu\r\n";
         uartPrintString(messageHolder, 64);
-        strncpy(messageHolder, "   Num    Option\n  ----- ----------\n", 64);
+        strncpy(messageHolder, "   Num    Option\r\n  ----- ----------\r\n", 64);
         uartPrintString(messageHolder, 64);
-        strncpy(messageHolder, "    1    Logging\n    2    Readback\n    3    EE Nuke\n\n", 64);
+        strncpy(messageHolder, "    1    Logging\r\n    2    Readback\r\n    3    EE Nuke\r\n\r\n", 64);
         uartPrintString(messageHolder, 64);
       }
-      setLogState(MCP_READ);
+      setLogState(SLEEP);
+      setNextLogState(MENU);
       break;
 
     case MCP_READ:
@@ -131,7 +132,7 @@ int main(void)
         tempHumReading.rHum = (uint8_t)humResult;
 
         char messageHolder[32] = {0};
-        sprintf(messageHolder, "Temp: %d | RH: %d\n", tempHumReading.temp, tempHumReading.rHum);
+        sprintf(messageHolder, "Temp: %d | RH: %d\r\n", tempHumReading.temp, tempHumReading.rHum);
         uartPrintString(messageHolder, 32);
       }
       setLogState(SLEEP);
@@ -166,8 +167,11 @@ int main(void)
 
     case LOG_READBACK_RAW:
       {
+      char message[24] = "\r\nReadback Start\r\n";
+      uartPrintString(message, 24);
       EE_ReadbackRaw();
       }
+      setLogState(MENU);
       break;
 
     case EE_RESET:
@@ -212,7 +216,7 @@ int main(void)
       //I2C_read(MCP7940_ADDR, (uint8_t *)&current, 7);
 
       char messageHolder[64] = {0};
-      sprintf(messageHolder, "Tick: %u | %d %d %d DateTime: %d:%d:%d \n", count, sweeeeeet, reading.temp, reading.rHum, current.date.hour, current.date.min, current.date.sec);
+      sprintf(messageHolder, "Tick: %u | %d %d %d DateTime: %d:%d:%d \r\n", count, sweeeeeet, reading.temp, reading.rHum, current.date.hour, current.date.min, current.date.sec);
       uartPrintString(messageHolder, 64);
       count++;
     }*/
