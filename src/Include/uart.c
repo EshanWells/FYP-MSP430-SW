@@ -11,7 +11,6 @@
 
 #include "uart.h"
 
-#include <msp430.h>
 
 void initUart(void)
 {
@@ -44,5 +43,20 @@ __interrupt void UART_RX_ISR(void)
 {
     while (!(IFG2 & UCA0TXIFG)); // USCI_A0 TX buffer ready?
     UCA0TXBUF = UCA0RXBUF; // TX -> RXed character
-    //LED_TGLE;
+    
+    /*if(MENU == getLogState() && MENU == getNextLogState)
+    {
+        switch (UCA0RXBUF)
+        {
+        case '1':
+            setLogState(SHT_START);
+            break;
+        
+        default:
+            setLogState(MENU);
+            break;
+        }
+
+        _bic_SR_register_on_exit(LPM0_bits);
+    }*/
 }

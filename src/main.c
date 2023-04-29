@@ -63,7 +63,7 @@ int main(void)
       uartPrintString(startMessage, strlen(startMessage));
 
       setLogState(SLEEP);
-      setNextLogState(SHT_START);
+      setNextLogState(MENU);
       timer1Counter0(4000);
       }
       break;
@@ -71,8 +71,14 @@ int main(void)
     case MENU:
       // maybe present some options? Log, Readback, etc.
       {
-
+        char messageHolder[64] = "Container Logger Main Menu\n";
+        uartPrintString(messageHolder, 64);
+        strncpy(messageHolder, "   Num    Option\n  ----- ----------\n", 64);
+        uartPrintString(messageHolder, 64);
+        strncpy(messageHolder, "    1    Logging\n    2    Readback\n    3    EE Nuke\n\n", 64);
+        uartPrintString(messageHolder, 64);
       }
+      setLogState(MCP_READ);
       break;
 
     case MCP_READ:
@@ -159,25 +165,25 @@ int main(void)
       break;
 
     case LOG_READBACK_RAW:
-    {
+      {
       EE_ReadbackRaw();
+      }
       break;
-    }
+
+    case EE_RESET:
+
+      break;
 
       //! in these error sections, somehow display an error then transition to a known state
       //! Implement watchdog timer
 
     case GENERAL_ERROR:
-      while (1); // implement error counter?
       break;
 
     case EE_ERROR:
-      while (1);
       break;
 
     case I2C_ERROR:
-      while (1)
-        ;
       break;
 
     case RESET:
@@ -185,8 +191,6 @@ int main(void)
       break;
 
     default:
-      while (1)
-        ; // error counter then fire back to start
       break;
     }
 
