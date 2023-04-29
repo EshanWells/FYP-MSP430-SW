@@ -59,6 +59,10 @@ __interrupt void UART_RX_ISR(void)
             }
             break;
         
+        case 0x33:
+            //implement some sort of 'are you sure?' here honestly.
+            break;
+
         default:
             setLogState(MENU);
             break;
