@@ -167,15 +167,25 @@ int main(void)
 
     case LOG_READBACK_RAW:
       {
-      char message[24] = "\r\nReadback Start\r\n";
-      uartPrintString(message, 24);
-      EE_ReadbackRaw();
+        char message[24] = "\r\nReadback Start\r\n";
+        uartPrintString(message, 24);
+        EE_ReadbackRaw();
       }
       setLogState(MENU);
       break;
 
     case EE_RESET:
-
+      {
+        data[32] = {0xFF}; //!Need to test the heck outta this bad boy
+        uint8_t index;
+        for(index = 0; index < 128; index++)
+        {
+          uint16_t address = index<<5;
+          EE_write(address, data, 32);
+        } 
+        char message[24] = "\r\nEE Wiped\r\n"
+        uartPrintString(message, 24);
+      }
       break;
 
       //! in these error sections, somehow display an error then transition to a known state
