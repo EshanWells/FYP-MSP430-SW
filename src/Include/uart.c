@@ -92,6 +92,7 @@ __interrupt void UART_RX_ISR(void)
         } else {
             setLogState(MENU);
         }
+        _bic_SR_register_on_exit(LPM3_bits);
     }
     else //echo character if it's not a command. This could be disabled later.
     {

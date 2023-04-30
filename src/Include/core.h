@@ -44,11 +44,10 @@ typedef enum
     MCP_WRITEALARM,
     SLEEP,
     LOG_READBACK_RAW,
-    EE_RESET,
     GENERAL_ERROR,
     EE_ERROR,
     I2C_ERROR,
-    RESET,
+    EE_RESET
 }LOG_FSM;
 
 extern volatile LOG_FSM logState;

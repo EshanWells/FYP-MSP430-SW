@@ -12,7 +12,7 @@
 #include "timer1_A3.h"
 #include "core.h"
 
-inline void stopTimer1(void)
+void stopTimer1(void)
 {
     TA1CTL &= ~MC_1;
 }

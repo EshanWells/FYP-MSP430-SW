@@ -59,17 +59,21 @@ int main(void)
       // non core boot code?
       // probably check for an EE reset condition?
       {
-      char startMessage[] = "\r\nContainer Logger Software Init Complete\r\n";
-      uartPrintString(startMessage, strlen(startMessage));
+        char startMessage[] = "\r\nContainer Logger Software Init Complete\r\n";
+        uartPrintString(startMessage, strlen(startMessage));
 
-      setLogState(SLEEP);
-      setNextLogState(MENU);
-      timer1Counter0(4000);
+        setLogState(SLEEP);
+        setNextLogState(MENU);
+        timer1Counter0(4000);
+
+        //*Do something like finding the start of the SLL!!!
+
       }
       break;
 
     case MENU:
       // maybe present some options? Log, Readback, etc.
+      stopTimer1();
       {
         char messageHolder[40] = "\r\nContainer Logger Main Menu\r\n";
         uartPrintString(messageHolder, 40);
@@ -180,20 +184,6 @@ int main(void)
       setLogState(MENU);
       break;
 
-    case EE_RESET:
-      {
-        uint8_t data[32] = {0xFF}; //!Need to test the heck outta this bad boy
-        uint8_t index;
-        for(index = 0; index < 128; index++)
-        {
-          uint16_t address = index<<5;
-          EE_write(address, data, 32);
-        } 
-        char message[24] = "\r\nEE Wiped\r\n";
-        uartPrintString(message, 24);
-      }
-      break;
-
       //! in these error sections, somehow display an error then transition to a known state
       //! Implement watchdog timer
 
@@ -206,35 +196,31 @@ int main(void)
     case I2C_ERROR:
       break;
 
-    case RESET:
-      // EE clearing code?
+    case EE_RESET:
+      {
+        char message[24] = "\r\nEE Wipe Started\r\n";
+        uartPrintString(message, 24);
+        uint8_t data[32]; //!Need to test the heck outta this bad boy
+        uint8_t i;
+        for(i = 0; i < 32; i++)
+        {
+          data[i] = 0x69;
+        }
+        uint16_t index = 0;
+        for(index = 0; index < 2048; index++)
+        {
+          uint16_t address = index<<5;
+          EE_write(address, data, 32);
+          __delay_cycles(5500);
+        }
+        strncpy(message, "\r\nEE Wiped\r\n", 24);
+        uartPrintString(message, 24);
+        setLogState(MENU);
+      }
       break;
 
     default:
       break;
     }
-
-
-    /*if (doTickRoutine())
-    {
-      static uint16_t count = 0;
-      LED_TGLE;
-
-      uint16_t sweeeeeet = SHT_getSerialNumber();
-      SHT_RESULT_S reading;
-      reading = SHT_getMedReading();
-
-      //RTC_REG_IF_S current;
-
-      //uint8_t txData[1] = {0x00};
-
-      //I2C_write(MCP7940_ADDR, txData, 1);
-      //I2C_read(MCP7940_ADDR, (uint8_t *)&current, 7);
-
-      char messageHolder[64] = {0};
-      sprintf(messageHolder, "Tick: %u | %d %d %d DateTime: %d:%d:%d \r\n", count, sweeeeeet, reading.temp, reading.rHum, current.date.hour, current.date.min, current.date.sec);
-      uartPrintString(messageHolder, 64);
-      count++;
-    }*/
   }
 }
