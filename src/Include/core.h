@@ -31,6 +31,7 @@
 #include "EE.h"
 #include "SHT40.h"
 #include "RTC.h"
+#include "datalogger.h"
 
 typedef enum
 {

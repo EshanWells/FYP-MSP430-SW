@@ -20,9 +20,9 @@
 
 #define EE_ADDR 0x50
 
-volatile uint16_t errorCountGeneral = 0;
-volatile uint16_t errorCountEE = 0;
-volatile uint16_t errorCountI2C = 0;
+uint16_t errorCountGeneral = 0;
+uint16_t errorCountEE = 0;
+uint16_t errorCountI2C = 0;
 
 volatile LOG_FSM logState = STARTUP;
 volatile LOG_FSM nextLogState;
@@ -53,6 +53,10 @@ int main(void)
     static unsigned long tickCount = 0;
     static SHT_RESULT_S tempHumReading;
 
+    //*Log Indexes
+    uint16_t currentLogIndex = 0;
+    uint16_t nextLogIndex = 0;
+
     switch (logState)
     {
     case STARTUP:
@@ -62,11 +66,19 @@ int main(void)
         char startMessage[] = "\r\nContainer Logger Software Init Complete\r\n";
         uartPrintString(startMessage, strlen(startMessage));
 
+        //*Do something like finding the start of the SLL!!!
+        PAYLOAD_S sllHead;
+        do
+        {        
+          EE_read((nextLogIndex<<4), (uint8_t *)&sllHead, 16);
+          currentLogIndex = nextLogIndex;
+          nextLogIndex++;
+        }
+        while (sllHead.identifier == SLL_ID); //!this shit don't work sadge
+
         setLogState(SLEEP);
         setNextLogState(MENU);
         timer1Counter0(4000);
-
-        //*Do something like finding the start of the SLL!!!
 
       }
       break;
@@ -85,8 +97,8 @@ int main(void)
         uartPrintString(messageHolder, 40);
         strncpy(messageHolder, "    3    EE Nuke\r\n", 64);
         uartPrintString(messageHolder, 40);
-        //strncpy(messageHolder, "    4    Enter Time\r\n\r\n", 64);
-        //uartPrintString(messageHolder, 40);
+        sprintf(messageHolder, "\r\n\nCurrently %d Log Entries\r\n");
+        uartPrintString(messageHolder, 40);
       }
       setLogState(SLEEP);
       setNextLogState(MENU);
@@ -204,7 +216,7 @@ int main(void)
         uint8_t i;
         for(i = 0; i < 32; i++)
         {
-          data[i] = 0x69;
+          data[i] = 0xFF;
         }
         uint16_t index = 0;
         for(index = 0; index < 2048; index++)
