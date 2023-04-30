@@ -27,35 +27,23 @@ uint16_t errorCountI2C = 0;
 volatile LOG_FSM logState = STARTUP;
 volatile LOG_FSM nextLogState;
 
-//! Implement Debug Channel, potentially through UART
+//*Log Indexes
+uint16_t currentLogIndex = 0;
+uint16_t nextLogIndex = 0;
+
 
 int main(void)
 {
   sysInit();
   __bis_SR_register(GIE);
 
-/*
-  RTC_REG_IF_S dateSet;
-  dateSet.address = 0x00;
-  dateSet.date.sec = 0x80;
-  dateSet.date.min = 0x00;
-  dateSet.date.hour = 0x00;
-  dateSet.date.wkday = SUNDAY;
-  dateSet.date.day = 0x01;
-  dateSet.date.mth = 0x01;
-  dateSet.date.year = 0x70;
-
-  I2C_write(MCP7940_ADDR, (uint8_t *)&dateSet, 8);*/
-
   while (1)
   {
     //* Main State Machine
-    static unsigned long tickCount = 0;
+    //static unsigned long tickCount = 0;
     static SHT_RESULT_S tempHumReading;
 
-    //*Log Indexes
-    uint16_t currentLogIndex = 0;
-    uint16_t nextLogIndex = 0;
+    __delay_cycles(6000);
 
     switch (logState)
     {
@@ -63,22 +51,37 @@ int main(void)
       // non core boot code?
       // probably check for an EE reset condition?
       {
+        //*Do something like finding the start of the SLL!!!
+        uint8_t identifier[1];
+        /*do
+        {     
+            EE_read((nextLogIndex<<4), (uint8_t *)identifier, 1);
+            nextLogIndex++;
+        }
+        while (identifier[0] == SLL_ID); //!this is kinda working
+
+        currentLogIndex = nextLogIndex - 1;*/
+
+        EE_read((currentLogIndex<<4), (uint8_t *)identifier, 1);
+        while(identifier[0] == SLL_ID)
+        {
+          currentLogIndex++;
+          EE_read((currentLogIndex<<4), (uint8_t *)identifier, 1);
+        }
+        if (currentLogIndex == 0) //checks if we're at the start of the EE?
+        {
+          nextLogIndex = 0;
+        } else {
+          nextLogIndex = currentLogIndex + 1;
+        }
+        
+
         char startMessage[] = "\r\nContainer Logger Software Init Complete\r\n";
         uartPrintString(startMessage, strlen(startMessage));
 
-        //*Do something like finding the start of the SLL!!!
-        PAYLOAD_S sllHead;
-        do
-        {        
-          EE_read((nextLogIndex<<4), (uint8_t *)&sllHead, 16);
-          currentLogIndex = nextLogIndex;
-          nextLogIndex++;
-        }
-        while (sllHead.identifier == SLL_ID); //!this shit don't work sadge
-
-        setLogState(SLEEP);
+        setLogState(MENU);
         setNextLogState(MENU);
-        timer1Counter0(4000);
+        //timer1Counter0(4000);
 
       }
       break;
@@ -97,7 +100,15 @@ int main(void)
         uartPrintString(messageHolder, 40);
         strncpy(messageHolder, "    3    EE Nuke\r\n", 64);
         uartPrintString(messageHolder, 40);
-        sprintf(messageHolder, "\r\n\nCurrently %d Log Entries\r\n");
+
+        uint8_t number;
+        if (nextLogIndex = 0)
+        {
+            number = 0;
+        } else {
+            number = currentLogIndex;
+        }
+        sprintf(messageHolder, "\r\n\nCurrently %d Log Entries\r\n", number);
         uartPrintString(messageHolder, 40);
       }
       setLogState(SLEEP);
@@ -227,6 +238,12 @@ int main(void)
         }
         strncpy(message, "\r\nEE Wiped\r\n", 24);
         uartPrintString(message, 24);
+
+        currentLogIndex = 0;
+        nextLogIndex = 1;
+
+
+
         setLogState(MENU);
       }
       break;

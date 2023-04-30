@@ -14,7 +14,7 @@
 
 #include "core.h"
 
-#define SLL_ID 0x5A
+#define SLL_ID (uint8_t)0x5A
 
 typedef struct 
 {
