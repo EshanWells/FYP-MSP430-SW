@@ -13,7 +13,7 @@
 
 #include "core.h"
 
-#define ALARM_INTERVAL 15 //seconds
+#define ALARM_INTERVAL 60 //seconds
 
 void timer0Counter0(uint16_t delay)
 {
@@ -45,7 +45,7 @@ void stopTimer0(void)
 __interrupt void Timer0_A0_CCR0_ISR(void) //this may not work
 {
     incrementTicks();
-    LED_TGLE;
+    //LED_TGLE;
 
     if(getCoreMode() == LOGGING) //check if we're in logging mode
     {
