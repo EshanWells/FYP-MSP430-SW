@@ -65,6 +65,8 @@ extern volatile LOG_FSM nextLogState;
 
 extern volatile CORE_MODE coreMode;
 
+extern volatile unsigned long long tickCount;
+
 void setLogState(LOG_FSM set);
 
 LOG_FSM getLogState(void);
@@ -76,5 +78,9 @@ LOG_FSM getNextLogState(void);
 void setCoreMode(CORE_MODE set);
 
 CORE_MODE getCoreMode(void);
+
+unsigned long long ticks(void);
+
+void incrementTicks(void);
 
 #endif /* SRC_INCLUDE_CORE_H_ */

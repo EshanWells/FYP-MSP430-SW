@@ -39,20 +39,4 @@ void stopTimer0(void);
  */
 void blinkLED(void);
 
-/**
- * @brief return timer code, as yet unused
- *
- * @return uint8_t code
- */
-uint8_t getTimer0Code0(void);
-
-/**
- * @brief set a code for the timer to return, as yet unused
- *
- * @param set code
- */
-void setTimer0Code0(uint8_t set);
-
-uint8_t doTickRoutine(void);
-
 #endif

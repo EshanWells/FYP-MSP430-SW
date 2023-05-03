@@ -27,30 +27,34 @@ uint16_t errorCountI2C = 0;
 volatile LOG_FSM logState = STARTUP;
 volatile LOG_FSM nextLogState;
 
-volatile CORE_MODE = IDLE;
+volatile CORE_MODE coreMode = IDLE;
 
 //*Log Indexes
 uint16_t currentLogIndex = 0;
 uint16_t lastLogIndex = 0;
 
+volatile unsigned long long tickCount = 0;
 
 int main(void)
 {
   sysInit();
   __bis_SR_register(GIE);
 
-  timer0Counter0(12000);
+  timer0Counter0(12000); //start main tick counter
 
   while (1)
   {
-    //* Main State Machine
-    //static unsigned long tickCount = 0;
-    static SHT_RESULT_S tempHumReading;
+    static PAYLOAD_S payload;
 
-    __delay_cycles(6000);
+    //* Main State Machine
 
     switch (logState)
     {
+
+
+
+
+//*Logger Startup Routine
     case STARTUP:
       // non core boot code?
       // probably check for an EE reset condition?
@@ -93,6 +97,10 @@ int main(void)
       }
       break;
 
+
+
+
+//*Present Menu
     case MENU:
       stopTimer1();
       setCoreMode(IDLE);
@@ -115,14 +123,34 @@ int main(void)
       setNextLogState(MENU);
       break;
 
+
+
+
+//*Read date time
     case MCP_READ:
       // get current date time from MCP.
       // set next state
       // short term the tick count will suffice.
+      {
+      unsigned long long secs = ticks();
+      uint8_t hh = secs/3600;
+      uint8_t mm = (secs - (hh*3600))/60;
+      uint8_t ss = secs - (hh*3600) - (mm*60);
+
+      payload.date.year = 23;
+      payload.date.month = 06;
+      payload.date.date = 12;
+      payload.date.hour = hh;
+      payload.date.min = mm;
+      payload.date.sec = ss;
+      }
 
       setLogState(SHT_START);
       setNextLogState(SHT_START);
       break;
+
+
+
 
 //*START TEMP & HUM MEASUREMENT
     case SHT_START:
@@ -136,6 +164,9 @@ int main(void)
       setNextLogState(SHT_READ);
       timer1Counter0(100);//actual delay is 60 vlo cycles, this is error margin.
       break;
+
+
+
 
 //*READ TEMP & HUM DATA
     case SHT_READ:
@@ -163,25 +194,43 @@ int main(void)
             humResult = (100*H_MULT);
         }
 
-        tempHumReading.temp = (int16_t)tempResult;
-        tempHumReading.rHum = (uint8_t)humResult;
+        payload.temp = (int16_t)tempResult;
+        payload.relHum = (uint8_t)humResult;
 
         char messageHolder[32] = {0};
-        sprintf(messageHolder, "Temp: %d | RH: %d\r\n", tempHumReading.temp, tempHumReading.rHum);
+        sprintf(messageHolder, "Temp: %d | RH: %d\r\n", payload.temp, payload.relHum);
         uartPrintString(messageHolder, 32);
       }
       setLogState(SLEEP);
       setNextLogState(SHT_START);
-      timer1Counter0(65535);
       break;
 
+
+
+
+//*Write logs to EE
     case EE_WRITE:
       // final format data for EE, including a struct
       // write data to EE
       // set next state
       // sleep for an appropriate time
+
+      payload.identifier = SLL_ID;
+      payload.num = currentLogIndex;
+      payload.AL = 0xC0DE; //placeholder
+      payload.nextNode = ((currentLogIndex + 1)<<4);
+
+      EE_write((currentLogIndex<<4), &payload, 16);
+
+
+      setLogState(SLEEP);
+      setNextLogState(EE_READ);
       break;
 
+
+
+
+//*Verify EE data
     case EE_READ:
       // read back EE data from last address written
       // check it matches what we just sent
@@ -191,15 +240,27 @@ int main(void)
       // consider goiong back to write for a few turns.
       break;
 
-    case MCP_WRITEALARM:
+
+
+
+//*Write next alarm time to RTC
+    case MCP_WRITEALARM: //UNUSED
       // set alarm for RTC
       break;
 
+
+
+
+//*General Sleep state
     case SLEEP:
       // Set up sleep mode
       LPM3;
       break;
 
+
+
+
+//*Full EE Readback
     case LOG_READBACK_RAW:
       {
         char message[24] = "\r\nReadback Start\r\n";
@@ -209,9 +270,12 @@ int main(void)
       setLogState(MENU);
       break;
 
+
+
+
+
       //! in these error sections, somehow display an error then transition to a known state
       //! Implement watchdog timer
-
     case GENERAL_ERROR:
       break;
 
@@ -221,6 +285,10 @@ int main(void)
     case I2C_ERROR:
       break;
 
+
+
+
+//*Full EE Wipe
     case EE_RESET:
       {
         char message[24] = "\r\nEE Wipe Started\r\n";
@@ -243,8 +311,6 @@ int main(void)
 
         currentLogIndex = 0; //set these to both indicate a clean EE
         lastLogIndex = 0; 
-
-
 
         setLogState(MENU);
       }

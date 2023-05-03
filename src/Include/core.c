@@ -40,3 +40,13 @@ CORE_MODE getCoreMode(void)
 {
     return coreMode;
 }
+
+unsigned long long ticks(void)
+{
+    return tickCount;
+}
+
+void incrementTicks(void)
+{
+    tickCount++;
+}

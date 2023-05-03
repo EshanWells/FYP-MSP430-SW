@@ -13,6 +13,8 @@
 
 #include "core.h"
 
+#define ALARM_INTERVAL 15 //seconds
+
 void timer0Counter0(uint16_t delay)
 {
     // set up Timer0_A3
@@ -37,32 +39,20 @@ void stopTimer0(void)
     TA0CTL &= ~MC_1;
 }
 
-static volatile uint8_t timerCode = 0;
-
-uint8_t getTimer0Code0(void)
-{
-    return timerCode;
-}
-
-void setTimer0Code0(uint8_t set)
-{
-    timerCode = set;
-}
-
-uint8_t T0A3IFG1 = 0;
-
-uint8_t doTickRoutine(void)
-{
-    uint8_t rc = T0A3IFG1;
-    T0A3IFG1 = 0;
-    return rc;
-}
-
 /*****************************************/
 
 #pragma vector = TIMER0_A0_VECTOR
 __interrupt void Timer0_A0_CCR0_ISR(void) //this may not work
 {
-    TA0CCTL0 &= ~CCIFG;
-    T0A3IFG1 = 1;
+    incrementTicks();
+    LED_TGLE;
+
+    if(getCoreMode() == LOGGING) //check if we're in logging mode
+    {
+        if((ticks() % ALARM_INTERVAL) == 0) //is it time for an alarm?
+        {
+            setLogState(MCP_READ);
+            __bic_SR_register_on_exit(LPM3_bits);
+        }
+    }
 }
