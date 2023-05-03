@@ -201,8 +201,8 @@ int main(void)
         sprintf(messageHolder, "Temp: %d | RH: %d\r\n", payload.temp, payload.relHum);
         uartPrintString(messageHolder, 32);
       }
-      setLogState(SLEEP);
-      setNextLogState(SHT_START);
+      setLogState(EE_WRITE);
+      //setNextLogState();
       break;
 
 
