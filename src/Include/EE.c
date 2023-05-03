@@ -56,8 +56,7 @@ void EE_ReadbackRaw(void)
         EE_read(addressPointer, data, 16);
 
         char entryPrint[64] = {0};
-        sprintf(entryPrint, "%.4u - %.2X %.2X %.2X %.2X %.2X %.2X %.2X %.2X %.2X %.2X %.2X %.2X %.2X %.2X %.2X %.2X\r\n",
-        entryIndex,
+        sprintf(entryPrint, "%.2X %.2X %.2X %.2X %.2X %.2X %.2X %.2X %.2X %.2X %.2X %.2X %.2X %.2X %.2X %.2X\r\n",
         data[0],
         data[1],
         data[2],
