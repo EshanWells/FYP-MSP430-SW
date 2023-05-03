@@ -50,6 +50,7 @@ __interrupt void UART_RX_ISR(void)
         case 0x31: //1
             {
                 setLogState(SHT_START);
+                setCoreMode(LOGGING);
                 char message[24] = "\r\nLogger Start\r\n";
                 uartPrintString(message, 24);
             }
@@ -58,6 +59,7 @@ __interrupt void UART_RX_ISR(void)
         case 0x32:
             {
                 setLogState(LOG_READBACK_RAW);
+                setCoreMode(READBACK);
             }
             break;
         
@@ -89,6 +91,7 @@ __interrupt void UART_RX_ISR(void)
         if(UCA0RXBUF == 0x79)
         {
             setLogState(EE_RESET);
+            setCoreMode(EE_ERASE);
         } else {
             setLogState(MENU);
         }

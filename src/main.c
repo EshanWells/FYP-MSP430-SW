@@ -39,7 +39,7 @@ int main(void)
   sysInit();
   __bis_SR_register(GIE);
 
-  timer0Counter0(32768);
+  timer0Counter0(12000);
 
   while (1)
   {
@@ -94,8 +94,8 @@ int main(void)
       break;
 
     case MENU:
-      // maybe present some options? Log, Readback, etc.
       stopTimer1();
+      setCoreMode(IDLE);
       {
         char messageHolder[40] = "\r\nContainer Logger Main Menu\r\n";
         uartPrintString(messageHolder, 40);
@@ -120,6 +120,8 @@ int main(void)
       // set next state
       // short term the tick count will suffice.
 
+      setLogState(SHT_START);
+      setNextLogState(SHT_START);
       break;
 
 //*START TEMP & HUM MEASUREMENT
