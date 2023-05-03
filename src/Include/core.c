@@ -30,3 +30,13 @@ LOG_FSM getNextLogState(void)
 {
     return nextLogState;
 }
+
+void setCoreMode(CORE_MODE set)
+{
+    coreMode = set;
+}
+
+CORE_MODE getCoreMode(void)
+{
+    return coreMode;
+}

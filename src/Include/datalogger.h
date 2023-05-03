@@ -35,12 +35,12 @@ typedef struct
 typedef struct
 {
     uint8_t identifier;     //1
-    TWOBYTEHL_S num;        //3
+    uint16_t num;        //3
     DATETIME_S date;        //9
-    TWOBYTEHL_S temp;       //11
+    uint16_t temp;       //11
     uint8_t relHum;         //12
-    TWOBYTEHL_S AL;         //14
-    TWOBYTEHL_S nextNode;   //16
+    uint16_t AL;         //14
+    uint16_t nextNode;   //16
 } __attribute__((packed)) PAYLOAD_S;
 
 typedef struct 

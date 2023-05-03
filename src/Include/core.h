@@ -51,9 +51,19 @@ typedef enum
     EE_RESET
 }LOG_FSM;
 
+typedef enum
+{
+    IDLE,
+    LOGGING,
+    READBACK,
+    EE_ERASE,
+}CORE_MODE;
+
 extern volatile LOG_FSM logState;
 
 extern volatile LOG_FSM nextLogState;
+
+extern volatile CORE_MODE coreMode;
 
 void setLogState(LOG_FSM set);
 
@@ -62,5 +72,9 @@ LOG_FSM getLogState(void);
 void setNextLogState(LOG_FSM set);
 
 LOG_FSM getNextLogState(void);
+
+void setCoreMode(CORE_MODE set);
+
+CORE_MODE getCoreMode(void);
 
 #endif /* SRC_INCLUDE_CORE_H_ */

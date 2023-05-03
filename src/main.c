@@ -27,15 +27,19 @@ uint16_t errorCountI2C = 0;
 volatile LOG_FSM logState = STARTUP;
 volatile LOG_FSM nextLogState;
 
+volatile CORE_MODE = IDLE;
+
 //*Log Indexes
 uint16_t currentLogIndex = 0;
-uint16_t nextLogIndex = 0;
+uint16_t lastLogIndex = 0;
 
 
 int main(void)
 {
   sysInit();
   __bis_SR_register(GIE);
+
+  timer0Counter0(32768);
 
   while (1)
   {
@@ -52,36 +56,39 @@ int main(void)
       // probably check for an EE reset condition?
       {
         //*Do something like finding the start of the SLL!!!
-        uint8_t identifier[1];
-        /*do
-        {     
-            EE_read((nextLogIndex<<4), (uint8_t *)identifier, 1);
-            nextLogIndex++;
-        }
-        while (identifier[0] == SLL_ID); //!this is kinda working
+        uint8_t result[1] = {0x00};
+        uint16_t peAddrEE = 0x0000; //external pointer to ee address for this process.
 
-        currentLogIndex = nextLogIndex - 1;*/
-
-        EE_read((currentLogIndex<<4), (uint8_t *)identifier, 1);
-        while(identifier[0] == SLL_ID)
-        {
-          currentLogIndex++;
-          EE_read((currentLogIndex<<4), (uint8_t *)identifier, 1);
-        }
-        if (currentLogIndex == 0) //checks if we're at the start of the EE?
-        {
-          nextLogIndex = 0;
-        } else {
-          nextLogIndex = currentLogIndex + 1;
-        }
+        EE_read(peAddrEE, (uint8_t *)result, 1); //read 1st location
         
+        if(result[0] == 0x5A) //first location is written fine.
+        {
+          peAddrEE += 0x0010; //incrememnt ee pointer
+          uint8_t headFound = 0;
+
+          while(!headFound) //increment through the loop until we find the first unwritten location
+          {
+            EE_read(peAddrEE, (uint8_t *)result, 1);
+
+            if(result[0] == 0x5A)
+            {
+              peAddrEE += 0x0010;
+            } else {
+              headFound = 1;
+            }
+          }
+          currentLogIndex = peAddrEE >>4; //current 'head'
+          lastLogIndex = currentLogIndex - 1; //last written location
+        } else { //this situation arises on a clean EEPROM.
+          currentLogIndex = 0;
+          lastLogIndex = 0;
+        }
 
         char startMessage[] = "\r\nContainer Logger Software Init Complete\r\n";
         uartPrintString(startMessage, strlen(startMessage));
 
         setLogState(MENU);
         setNextLogState(MENU);
-        //timer1Counter0(4000);
 
       }
       break;
@@ -101,14 +108,7 @@ int main(void)
         strncpy(messageHolder, "    3    EE Nuke\r\n", 64);
         uartPrintString(messageHolder, 40);
 
-        uint8_t number;
-        if (nextLogIndex = 0)
-        {
-            number = 0;
-        } else {
-            number = currentLogIndex;
-        }
-        sprintf(messageHolder, "\r\n\nCurrently %d Log Entries\r\n", number);
+        sprintf(messageHolder, "\r\n\nCurrently %d Log Entries\r\n", currentLogIndex);
         uartPrintString(messageHolder, 40);
       }
       setLogState(SLEEP);
@@ -145,7 +145,7 @@ int main(void)
         I2C_read(SHT40_ADDR, rxData, 6);
         uint16_t tempMeas = (rxData[0] << 8) | rxData[1];
         long tempResult = (long)tempMeas * (175 * T_MULT);
-        tempResult /= 65535;
+        tempResult /= 65535; //this operation honestly sucks man
         tempResult -= (45 * T_MULT);
 
         uint16_t humMeas = (rxData[3] << 8) | rxData[4];
@@ -239,8 +239,8 @@ int main(void)
         strncpy(message, "\r\nEE Wiped\r\n", 24);
         uartPrintString(message, 24);
 
-        currentLogIndex = 0;
-        nextLogIndex = 1;
+        currentLogIndex = 0; //set these to both indicate a clean EE
+        lastLogIndex = 0; 
 
 
 
