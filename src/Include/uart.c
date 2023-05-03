@@ -49,7 +49,7 @@ __interrupt void UART_RX_ISR(void)
         {
         case 0x31: //1
             {
-                setLogState(SHT_START);
+                setLogState(MCP_READ);
                 setCoreMode(LOGGING);
                 char message[24] = "\r\nLogger Start\r\n";
                 uartPrintString(message, 24);

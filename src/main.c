@@ -20,6 +20,8 @@
 
 #define EE_ADDR 0x50
 
+#define TERMINAL_VERBOSE 0
+
 uint16_t errorCountGeneral = 0;
 uint16_t errorCountEE = 0;
 uint16_t errorCountI2C = 0;
@@ -34,6 +36,11 @@ uint16_t currentLogIndex = 0;
 uint16_t lastLogIndex = 0;
 
 volatile unsigned long long tickCount = 0;
+
+//*Error counters
+uint16_t generalError = 0;
+uint16_t EEError = 0;
+uint16_t I2CError = 0;
 
 int main(void)
 {
@@ -197,9 +204,12 @@ int main(void)
         payload.temp = (int16_t)tempResult;
         payload.relHum = (uint8_t)humResult;
 
-        char messageHolder[32] = {0};
-        sprintf(messageHolder, "Temp: %d | RH: %d\r\n", payload.temp, payload.relHum);
-        uartPrintString(messageHolder, 32);
+        if(TERMINAL_VERBOSE)
+        {
+          char messageHolder[32] = {0};
+          sprintf(messageHolder, "Temp: %d | RH: %d\r\n", payload.temp, payload.relHum);
+          uartPrintString(messageHolder, 32);
+        }
       }
       setLogState(EE_WRITE);
       //setNextLogState();
@@ -221,10 +231,12 @@ int main(void)
       payload.nextNode = ((currentLogIndex + 1)<<4);
 
       EE_write((currentLogIndex<<4), &payload, 16);
-
+      currentLogIndex++;
+      lastLogIndex++;
 
       setLogState(SLEEP);
       setNextLogState(EE_READ);
+      timer1Counter0(100); //5ms delay + margin
       break;
 
 
@@ -236,7 +248,14 @@ int main(void)
       // check it matches what we just sent
       // if it does, move onto next state
       // if not, we got an error
-
+      {
+        PAYLOAD_S writeCheck;
+        EE_read(lastLogIndex, &writeCheck, 16);
+        if(payload.identifier != writeCheck.identifier)
+        {
+          setLogState(EE_ERROR);
+        }
+      }
       // consider goiong back to write for a few turns.
       break;
 
@@ -277,12 +296,20 @@ int main(void)
       //! in these error sections, somehow display an error then transition to a known state
       //! Implement watchdog timer
     case GENERAL_ERROR:
+      generalError++;
+      setLogState(SLEEP);
       break;
 
     case EE_ERROR:
+      EEError++;
+      setLogState(SLEEP);
       break;
 
     case I2C_ERROR:
+      I2CError++;
+      UCB0CTL1 |= UCSWRST;
+      UCB0CTL1 &= ~UCSWRST;
+      setLogState(SLEEP);
       break;
 
 
