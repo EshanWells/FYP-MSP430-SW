@@ -45,6 +45,7 @@ typedef enum
     MCP_WRITEALARM,
     SLEEP,
     LOG_READBACK_RAW,
+    LOG_READBACK_FORMAT,
     GENERAL_ERROR,
     EE_ERROR,
     I2C_ERROR,

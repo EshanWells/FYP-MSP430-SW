@@ -112,15 +112,17 @@ int main(void)
       stopTimer1();
       setCoreMode(IDLE);
       {
-        char messageHolder[40] = "\r\nContainer Logger Main Menu\r\n";
+        char messageHolder[40] = "\r\n\nContainer Logger Main Menu\r\n";
         uartPrintString(messageHolder, 40);
         strncpy(messageHolder, "   Num    Option\r\n  ----- ----------\r\n", 64);
         uartPrintString(messageHolder, 40);
         strncpy(messageHolder, "    1    Logging\r\n", 64);
         uartPrintString(messageHolder, 40);
-        strncpy(messageHolder, "    2    Readback\r\n", 64);
+        strncpy(messageHolder, "    2    Raw Readback\r\n", 64);
         uartPrintString(messageHolder, 40);
-        strncpy(messageHolder, "    3    EE Nuke\r\n", 64);
+        strncpy(messageHolder, "    3    Formatted Readback\r\n", 64);
+        uartPrintString(messageHolder, 40);
+        strncpy(messageHolder, "    4    EE Nuke\r\n", 64);
         uartPrintString(messageHolder, 40);
 
         sprintf(messageHolder, "\r\n\nCurrently %d Log Entries\r\n", currentLogIndex);
@@ -289,6 +291,37 @@ int main(void)
       setLogState(MENU);
       break;
 
+
+
+
+//*
+    case LOG_READBACK_FORMAT:
+      {
+        uint8_t readback[16];
+        uint16_t address = 0;
+        char message[16] = {0};
+        uint16_t i;
+        
+        uint16_t number;
+        uint16_t temperature;
+        uint8_t humidity;
+
+        for(i=0; i<currentLogIndex; i++)
+        {
+          address = i<<4;
+          EE_read(address, (uint8_t *)readback, 16);
+
+          number = (readback[2] << 8) + readback[1];
+          temperature = (readback[10] << 8) + readback[9];
+          humidity = readback[11];
+          
+          sprintf(message, "\r\n%d %d %d", number, temperature, humidity);
+          uartPrintString(message,16);
+        }
+      }
+
+      setLogState(MENU);
+      break;
 
 
 

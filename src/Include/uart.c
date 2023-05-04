@@ -62,8 +62,13 @@ __interrupt void UART_RX_ISR(void)
                 setCoreMode(READBACK);
             }
             break;
-        
+
         case 0x33:
+                setLogState(LOG_READBACK_FORMAT);
+                setCoreMode(READBACK);
+            break;
+        
+        case 0x34:
             //implement some sort of 'are you sure?' here honestly.
             {
                 nukeWait = 1;
