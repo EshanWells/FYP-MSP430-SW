@@ -16,7 +16,7 @@ while 1:
         entryNumberHigh  = byteArray[2]
         
         sec              = byteArray[3]
-        mins              = byteArray[4]
+        mins             = byteArray[4]
         hour             = byteArray[5]
         day              = byteArray[6]
         month            = byteArray[7]
