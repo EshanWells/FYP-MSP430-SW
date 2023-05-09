@@ -42,6 +42,9 @@ uint16_t generalError = 0;
 uint16_t EEError = 0;
 uint16_t I2CError = 0;
 
+//*Testing Variables
+uint8_t justStarted = 0;
+
 int main(void)
 {
   sysInit();
@@ -101,6 +104,8 @@ int main(void)
         setLogState(MENU);
         setNextLogState(MENU);
 
+        justStarted = 1;
+
       }
       break;
 
@@ -130,6 +135,17 @@ int main(void)
       }
       setLogState(SLEEP);
       setNextLogState(MENU);
+
+      if(justStarted)
+      {
+        justStarted = 0;
+        __delay_cycles(500000); //wait half a second, put this in the trigger
+        setLogState(MCP_READ);
+        setCoreMode(LOGGING);
+        char message[24] = "\r\nLogger Start\r\n";
+        uartPrintString(message, 24);
+      }
+
       break;
 
 
