@@ -139,7 +139,6 @@ int main(void)
       if(justStarted)
       {
         justStarted = 0;
-        __delay_cycles(500000); //wait half a second, put this in the trigger
         setLogState(MCP_READ);
         setCoreMode(LOGGING);
         char message[24] = "\r\nLogger Start\r\n";
