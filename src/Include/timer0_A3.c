@@ -13,7 +13,7 @@
 
 #include "core.h"
 
-#define ALARM_INTERVAL 15 //seconds
+#define ALARM_INTERVAL 900 //seconds
 
 void timer0Counter0(uint16_t delay)
 {
