@@ -290,7 +290,7 @@ int main(void)
 //*General Sleep state
     case SLEEP:
       // Set up sleep mode
-      LPM0;
+      LPM1;
       break;
 
 
