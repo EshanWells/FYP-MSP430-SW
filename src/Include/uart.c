@@ -19,7 +19,7 @@ void initUart(void)
     P1SEL2 = BIT1 + BIT2;
 
     UCA0CTL1 |= UCSSEL_2;       // SMCLK
-    UCA0BR0 = 8;                // 1MHz 115200
+    UCA0BR0 = 104;                // 1MHz 115200 = 8, 9600 = 104
     UCA0BR1 = 0;                // 1MHz 115200
     UCA0MCTL = UCBRS2 + UCBRS0; // Modulation UCBRSx = 5
     UCA0CTL1 &= ~UCSWRST;       // **Initialize USCI state machine**
