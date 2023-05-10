@@ -34,4 +34,6 @@ In a very loose order
 
 03/05/2023 Haven't had major notes until this, but regarding the change of plan RE: RTC. I believe the crystal is dead, and I just can't get these 32KHz crystals playing nicely with anything. I've had to change to the VLO on the MCU side, which is far from optimal. As I can't reasonably get the RTC working, I'll have to set up Timer0 as a tick counter and set an alarm in software to get the ball rolling. For the purposes of this gathering data, it'll work.
 
-08/05/2023 As of right now, I think this software is pretty much complete for the purposes of the dissertation.
+08/05/2023 As of right now, I think this software is pretty much complete for the purposes of the dissertation. There's a validation branch which is also relevant for the disso. In the near future I do want the RTC implemented fully, I want programmable logging intervals (this should be quite easy IMO), basically a fully fledged interface with the host machine. I want more consistency on the Bluetooth front, on all Serial terminals, and I really want to get comfortable with Python to a stage I get a full nice frontend. For now, this is shelved as the other points of my degree take center stage. But it's been great fun regardless and a good learning experience.
+
+I also wanna do a complete rewrite... one day...
