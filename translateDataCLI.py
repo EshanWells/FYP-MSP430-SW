@@ -42,7 +42,7 @@ while 1:
         degree_sign = u'\N{DEGREE SIGN}'
 
         entryString = "Entry Number: " + str(entryNumber)
-        timeString = (str(hour) + ":" + str(mins) + ":" + str(sec) + " " + str(day) + "/" + str(month) + "/" + str(year))
+        timeString = "\nTime & Date: " + (str(hour) + ":" + str(mins) + ":" + str(sec) + " " + str(day) + "/" + str(month) + "/" + str(year))
         tempString = "\nTemperature: " + str(temp) + degree_sign + "C"
         humString = "\nHumidity: " + str(humidity) + "%"
         
