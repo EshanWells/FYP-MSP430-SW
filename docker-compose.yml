@@ -1,0 +1,8 @@
+version: '3.4'
+
+services:
+  fypmsp430sw:
+    image: fypmsp430sw
+    build:
+      context: .
+      dockerfile: ./Dockerfile
